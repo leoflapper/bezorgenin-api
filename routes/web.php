@@ -22,19 +22,19 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->middleware('verified');
 
-Route::resource('companies', 'CompanyController');
+Route::resource('companies', 'CompanyController')->middleware('verified');
 
 
-Route::resource('addresses', 'AddressController');
+Route::resource('addresses', 'AddressController')->middleware('verified');
 
-Route::resource('mealCategories', 'MealCategoryController');
+Route::resource('mealCategories', 'MealCategoryController')->middleware('verified');
 
-Route::resource('mealCategories', 'MealCategoryController');
+Route::resource('mealCategories', 'MealCategoryController')->middleware('verified');;
 
-Route::resource('kitchens', 'KitchenController');
+Route::resource('kitchens', 'KitchenController')->middleware('verified');
 
-Route::resource('mealCategories', 'MealCategoryController');
+Route::resource('mealCategories', 'MealCategoryController')->middleware('verified');
 
-Route::resource('meals', 'MealController');
+Route::resource('meals', 'MealController')->middleware('verified');
 
-Route::resource('mealCategories', 'MealCategoryController');
+Route::resource('mealCategories', 'MealCategoryController')->middleware('verified');
