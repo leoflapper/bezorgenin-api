@@ -45,7 +45,6 @@ class Kitchen extends Model
      */
     public static $rules = [
         'name' => 'required',
-        'description' => 'required'
     ];
 
     /**
