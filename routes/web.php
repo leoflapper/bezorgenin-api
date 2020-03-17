@@ -29,11 +29,7 @@ Route::resource('addresses', 'AddressController')->middleware('verified');
 
 Route::resource('mealCategories', 'MealCategoryController')->middleware('verified');
 
-Route::resource('mealCategories', 'MealCategoryController')->middleware('verified');;
-
 Route::resource('kitchens', 'KitchenController')->middleware('verified');
-
-Route::resource('mealCategories', 'MealCategoryController')->middleware('verified');
 
 Route::resource('meals', 'MealController')->middleware('verified');
 

@@ -20,6 +20,7 @@ class CreateMealsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->text('allergens')->nullable();
+            $table->decimal('price', 16, 4);
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('meal_category_id')->references('id')->on('meal_categories');

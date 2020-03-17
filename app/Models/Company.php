@@ -36,11 +36,10 @@ class Company extends Model
 
     protected $dates = ['deleted_at'];
 
-
-
     public $fillable = [
         'name',
         'first_name',
+        'slug',
         'last_name',
         'address_id',
         'delivery_costs',
@@ -60,6 +59,7 @@ class Company extends Model
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',
+        'slug' => 'string',
         'first_name' => 'string',
         'last_name' => 'string',
         'address_id' => 'integer',
@@ -79,6 +79,7 @@ class Company extends Model
      */
     public static $rules = [
         'name' => 'required',
+        'slug' => 'required',
         'first_name' => 'required',
         'last_name' => 'required',
         'delivery_costs' => 'required',

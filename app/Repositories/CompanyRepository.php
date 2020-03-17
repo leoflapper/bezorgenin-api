@@ -30,6 +30,15 @@ class CompanyRepository extends BaseRepository
         'vat_id'
     ];
 
+
+    public function find($id, $columns = ['*'])
+    {
+        if(!$result = parent::find($id, $columns)) {
+            $result = $this->model->newQuery()->where('slug', $id)->first($columns);
+        }
+        return $result;
+    }
+
     /**
      * Return searchable fields
      *

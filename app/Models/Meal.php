@@ -23,7 +23,7 @@ class Meal extends Model
     use SoftDeletes;
 
     public $table = 'meals';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -33,6 +33,7 @@ class Meal extends Model
         'meal_category_id',
         'company_id',
         'name',
+        'price',
         'description',
         'allergens'
     ];
