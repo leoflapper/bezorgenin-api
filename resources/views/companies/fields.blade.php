@@ -3,10 +3,16 @@
     {!! Form::label('name', 'Name:') !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
-<!-- Name Field -->
+<!-- Slug Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('slug', 'Slug:') !!}
     {!! Form::text('slug', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Name Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('image_url', 'Afbeeldings URL:') !!}
+    {!! Form::text('image_url', null, ['class' => 'form-control']) !!}
 </div>
 <!-- First Name Field -->
 <div class="form-group col-sm-6">

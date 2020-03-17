@@ -40,6 +40,7 @@ class Company extends Model
         'name',
         'first_name',
         'slug',
+        'image_url',
         'last_name',
         'address_id',
         'delivery_costs',
@@ -59,6 +60,7 @@ class Company extends Model
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',
+        'image_url' => 'string',
         'slug' => 'string',
         'first_name' => 'string',
         'last_name' => 'string',
@@ -80,6 +82,7 @@ class Company extends Model
     public static $rules = [
         'name' => 'required',
         'slug' => 'required',
+        'image_url' => 'required',
         'first_name' => 'required',
         'last_name' => 'required',
         'delivery_costs' => 'required',

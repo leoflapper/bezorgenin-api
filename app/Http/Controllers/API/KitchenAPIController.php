@@ -40,7 +40,7 @@ class KitchenAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($kitchens->toArray(), 'Kitchens retrieved successfully');
+        return $this->sendResponse($kitchens->toArrayWithRelationships(), 'Kitchens retrieved successfully');
     }
 
     /**
@@ -77,7 +77,7 @@ class KitchenAPIController extends AppBaseController
             return $this->sendError('Kitchen not found');
         }
 
-        return $this->sendResponse($kitchen->toArray(), 'Kitchen retrieved successfully');
+        return $this->sendResponse($kitchen->toArrayWithRelationships(), 'Kitchen retrieved successfully');
     }
 
     /**

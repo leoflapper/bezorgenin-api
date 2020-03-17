@@ -55,14 +55,10 @@ class Kitchen extends Model
         return $this->belongsToMany(\App\Models\Company::class);
     }
 
-    public function toArray() {
-        $result = parent::toArray();
-        $result['companies'] = $this->companies()->getResults()->toArray();
-        return $result;
-
+    public function toArrayWithRelationships()
+    {
+        $data = $this->toArray();
+        $data['companies'] = $this->companies()->getResults()->toArray();
+        return $data;
     }
-
-
-
-
 }
