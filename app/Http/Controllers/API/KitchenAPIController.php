@@ -8,6 +8,7 @@ use App\Models\Kitchen;
 use App\Repositories\KitchenRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Collection;
 use Response;
 
 /**
@@ -40,7 +41,13 @@ class KitchenAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($kitchens->toArrayWithRelationships(), 'Kitchens retrieved successfully');
+        $result = new Collection();
+        foreach ($kitchens as $kitchen) {
+            $result->push($kitchen->toArrayWithRelationships());
+        }
+
+
+        return $this->sendResponse($result, 'Kitchens retrieved successfully');
     }
 
     /**
