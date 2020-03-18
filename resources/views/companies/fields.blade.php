@@ -28,8 +28,11 @@
 
 <!-- Address Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('address_id', 'Address Id:') !!}
-    {!! Form::text('address_id', null, ['class' => 'form-control']) !!}
+    {!! Form::label('address_id', 'Address:') !!}
+    {!! Form::select('address_id', \App\Models\Address::get()->pluck('identifier', 'id'), $company->address->pluck('id')->toArray(), [
+        'id' => 'address',
+        'class' => 'form-control'
+    ]) !!}
 </div>
 
 <!-- Delivery Costs Field -->

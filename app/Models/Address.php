@@ -22,7 +22,7 @@ class Address extends Model
     use SoftDeletes;
 
     public $table = 'addresses';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -65,5 +65,15 @@ class Address extends Model
         'country_id' => 'required'
     ];
 
-    
+    public function getIdentifierAttribute()
+    {
+        $identifier = $this->street . ' ' . $this->housenumber;
+        if($this->housenumber_addition) {
+            $identifier .= ' ' . $this->housenumber_addition;
+        }
+        $identifier .= ', '. $this->city;
+        return $identifier;
+    }
+
+
 }
