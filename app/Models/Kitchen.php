@@ -58,7 +58,7 @@ class Kitchen extends Model
     public function toArrayWithRelationships()
     {
         $data = $this->toArray();
-        $data['companies'] = $this->companies()->getResults()->toArray();
+        $data['companies'] = $this->companies->toArray();
         return $data;
     }
 }

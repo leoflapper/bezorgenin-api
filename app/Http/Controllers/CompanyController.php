@@ -53,7 +53,7 @@ class CompanyController extends AppBaseController
     public function store(CreateCompanyRequest $request)
     {
         $input = $request->all();
-        dd($input);
+
         $company = $this->companyRepository->create($input);
 
         Flash::success('Company saved successfully.');
