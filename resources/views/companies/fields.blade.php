@@ -84,7 +84,7 @@
 <div class="form-group col-sm-6">
     {!! Form::label('', 'Keukens:') !!}
 
-    {!! Form::select('kitchens[]', \App\Models\Kitchen::get()->pluck('name', 'id'), Request::get('kitchens', 0), [
+    {!! Form::select('kitchens[]', \App\Models\Kitchen::get()->pluck('name', 'id'), $company->kitchens->pluck('id')->toArray(), [
         'id' => 'kitchens',
         'class' => 'form-control',
         'multiple' => 'multiple',
