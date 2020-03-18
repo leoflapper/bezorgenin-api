@@ -66,14 +66,8 @@ class CompanyDataTable extends DataTable
     {
         return [
             'name',
-            'first_name',
-            'last_name',
-            'delivery_costs',
-            'min_order_amount',
             'email',
             'telephone',
-            'iban',
-            'kvk',
             'vat_id'
         ];
     }
