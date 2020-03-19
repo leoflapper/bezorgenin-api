@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Company;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,10 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        Route::bind('company', function ($value) {
-//            $result = null;
-//
-//            return $result;
-//        });
+        Blade::directive('currency', function ($value) {
+            return "<?php echo App\Util\Currency::format($value); ?>";
+        });
     }
 }

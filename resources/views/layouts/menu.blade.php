@@ -18,3 +18,11 @@
     <a href="{{ route('meals.index') }}"><i class="fa fa-edit"></i><span>Meals</span></a>
 </li>
 
+<li class="{{ Request::is('orders*') ? 'active' : '' }}">
+    <a href="{{ route('orders.index') }}"><i class="fa fa-edit"></i><span>Orders</span></a>
+</li>
+
+<li class="{{ Request::is('orderProducts*') ? 'active' : '' }}">
+    <a href="{{ route('orderProducts.index') }}"><i class="fa fa-edit"></i><span>Order Products</span></a>
+</li>
+

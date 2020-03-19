@@ -2,17 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\Company;
-use App\Models\Meal;
+use App\Models\OrderProduct;
 use App\Repositories\BaseRepository;
 
 /**
- * Class MealRepository
+ * Class OrderProductRepository
  * @package App\Repositories
- * @version March 16, 2020, 7:53 pm UTC
+ * @version March 18, 2020, 7:58 pm UTC
 */
 
-class MealRepository extends BaseRepository
+class OrderProductRepository extends BaseRepository
 {
     /**
      * @var array
@@ -20,7 +19,9 @@ class MealRepository extends BaseRepository
     protected $fieldSearchable = [
         'name',
         'description',
-        'allergens'
+        'allergens',
+        'quantity',
+        'price'
     ];
 
     /**
@@ -38,15 +39,6 @@ class MealRepository extends BaseRepository
      **/
     public function model()
     {
-        return Meal::class;
-    }
-
-    /**
-     * @param int $id
-     * @param Company $company
-     * @return mixed
-     */
-    public function getByIdAndCompany(int $id, Company $company) {
-        return $this->makeModel()->query()->where('id', $id)->where('company_id', $company->id)->first();
+        return OrderProduct::class;
     }
 }

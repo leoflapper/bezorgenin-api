@@ -6,6 +6,8 @@ use App\DataTables\CompanyDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Mail\NewOrder;
+use App\Models\Order;
 use App\Repositories\CompanyRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
