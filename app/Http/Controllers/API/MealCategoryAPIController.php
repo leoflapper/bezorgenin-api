@@ -40,7 +40,7 @@ class MealCategoryAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($mealCategories->toArray(), 'Meal Categories retrieved successfully');
+        return $this->sendResponse($mealCategories->toArray(), 'Product categories retrieved successfully');
     }
 
     /**

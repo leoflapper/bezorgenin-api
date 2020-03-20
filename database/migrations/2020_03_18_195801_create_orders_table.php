@@ -32,7 +32,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('tax', 16, 4)->default(0);
             $table->decimal('shipping_price', 16, 4)->default(0);
             $table->decimal('total_price', 16, 4)->default(0);
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('company_id')->references('id')->on('companies');

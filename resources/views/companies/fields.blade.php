@@ -29,7 +29,12 @@
 <!-- Address Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('address_id', 'Address:') !!}
-    {!! Form::select('address_id', \App\Models\Address::get()->pluck('identifier', 'id'), $company->address->pluck('id')->toArray(), [
+
+    @php $currentAddresses = []; @endphp
+    @if(isset($company))
+        @php $currentAddresses = $company->address->pluck('id')->toArray() @endphp
+    @endif
+    {!! Form::select('address_id', \App\Models\Address::get()->pluck('identifier', 'id'), $currentAddresses , [
         'id' => 'address',
         'class' => 'form-control'
     ]) !!}
@@ -85,9 +90,13 @@
 
 <!-- Updated At Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('', 'Keukens:') !!}
+    {!! Form::label('', 'Categorieën:') !!}
 
-    {!! Form::select('kitchens[]', \App\Models\Kitchen::get()->pluck('name', 'id'), $company->kitchens->pluck('id')->toArray(), [
+    @php $currentKitchens = []; @endphp
+    @if(isset($company))
+        @php $currentKitchens = $company->kitchens->pluck('id')->toArray() @endphp
+    @endif
+    {!! Form::select('kitchens[]', \App\Models\Kitchen::get()->pluck('name', 'id'), $currentKitchens, [
         'id' => 'kitchens',
         'class' => 'form-control',
         'multiple' => 'multiple',

@@ -4,11 +4,11 @@ return [
     'default_country_id' => 'NL',
     'mail' => [
         'from' => [
-            'name' => 'Friesland Bezorgd',
+            'name' => 'Friesland Bezorgt',
             'email' => 'info@frieslandbezorgd.nl'
         ],
         'reply_to' => [
-            'name' => 'Friesland Bezorgd',
+            'name' => 'Friesland Bezorgt',
             'email' => 'no-reply@frieslandbezorgd.nl'
         ]
     ]
