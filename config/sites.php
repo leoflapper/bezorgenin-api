@@ -12,6 +12,9 @@ return [
             'Sneek'
         ],
     ],
+    'cors' => [
+        'sneekbezorgd.nl'
+    ],
     'paths' => [
         'sneekbezorgd.nl' => 'sneekbezorgd',
         'webezorgd.localhost' => 'sneekbezorgd'

@@ -19,7 +19,9 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['localhost:3000'],
+    'allowed_origins' => [
+        'sneekbezorgd.nl'
+    ],
 
     'allowed_origins_patterns' => [],
 
