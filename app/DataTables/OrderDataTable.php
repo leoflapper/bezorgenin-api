@@ -30,7 +30,7 @@ class OrderDataTable extends DataTable
                 $address .= $order->housenumber_addition;
             }
 
-            $address .= ', '.$order->city;
+            $address .= ', '.$order->postcode . ' ' . $order->city ;
             return $address;
         });
 
