@@ -6,16 +6,16 @@
     <a href="{{ route('addresses.index') }}"><i class="fa fa-edit"></i><span>Adressen</span></a>
 </li>
 
-<li class="{{ Request::is('mealCategories*') ? 'active' : '' }}">
-    <a href="{{ route('mealCategories.index') }}"><i class="fa fa-edit"></i><span>Productcategorieën</span></a>
-</li>
-
 <li class="{{ Request::is('kitchens*') ? 'active' : '' }}">
     <a href="{{ route('kitchens.index') }}"><i class="fa fa-edit"></i><span>Categorieën</span></a>
 </li>
 
 <li class="{{ Request::is('meals*') ? 'active' : '' }}">
-    <a href="{{ route('meals.index') }}"><i class="fa fa-edit"></i><span>Maaltijden</span></a>
+    <a href="{{ route('meals.index') }}"><i class="fa fa-edit"></i><span>Producten</span></a>
+</li>
+
+<li class="{{ Request::is('mealCategories*') ? 'active' : '' }}">
+    <a href="{{ route('mealCategories.index') }}"><i class="fa fa-edit"></i><span>Productcategorieën</span></a>
 </li>
 
 <li class="{{ Request::is('orders*') ? 'active' : '' }}">

@@ -33,9 +33,6 @@ Route::resource('kitchens', 'KitchenController')->middleware('verified');
 
 Route::resource('meals', 'MealController')->middleware('verified');
 
-Route::resource('mealCategories', 'MealCategoryController')->middleware('verified');
-
-
 Route::resource('orders', 'OrderController',  [ 'only' => ['index', 'show', 'edit', 'update', 'destroy']])->middleware('verified');
 
 Route::resource('orderProducts', 'OrderProductController',  [ 'only' => []])->middleware('verified');
