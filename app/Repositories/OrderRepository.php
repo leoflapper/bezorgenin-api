@@ -43,8 +43,7 @@ class OrderRepository extends BaseRepository
 
     public function create($input)
     {
-
-        if($host = request()->getHost()) {
+        if($host = request()->headers->get('Origin')) {
             $parsedUrl = parse_url($host);
             if(!isset($parsedUrl)) {
                 abort(404, 'Site does not exist');
