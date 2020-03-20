@@ -33,6 +33,12 @@ class OrderDataTable extends DataTable
             $address .= ', '.$order->city;
             return $address;
         });
+
+        $dataTable->editColumn('created_at', function($order)
+        {
+            return $order->created_at->format('d-m-Y H:i:s');
+        });
+
         return $dataTable->addColumn('action', 'orders.datatables_actions');
     }
 
