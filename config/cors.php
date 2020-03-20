@@ -20,7 +20,8 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'sneekbezorgd.nl'
+        'http://sneekbezorgd.nl/',
+        'https://sneekbezorgd.nl/'
     ],
 
     'allowed_origins_patterns' => [],
