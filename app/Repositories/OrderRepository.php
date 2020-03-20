@@ -43,16 +43,19 @@ class OrderRepository extends BaseRepository
 
     public function create($input)
     {
-        if($host = request()->headers->get('Origin')) {
-            $parsedUrl = parse_url($host);
-            if(!isset($parsedUrl)) {
-                abort(404, 'Site does not exist');
-            }
 
-            if(!$site = Site::createByUrlPath($parsedUrl['path'])) {
-                abort(404, 'Site does not exist');
-            }
-        }
+        $site = new Site('sneekbezorgd');
+//        if($host = request()->headers->get('Origin')) {
+//            $parsedUrl = parse_url($host);
+//
+//            if(!isset($parsedUrl['path'])) {
+//                abort(404, 'Site does not exist');
+//            }
+//
+//            if(!$site = Site::createByUrlPath($parsedUrl['path'])) {
+//                abort(404, 'Site does not exist');
+//            }
+//        }
         /**
          * @var Order $order
          */
