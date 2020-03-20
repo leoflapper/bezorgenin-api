@@ -49,7 +49,9 @@ class Company extends Model
         'telephone',
         'iban',
         'kvk',
-        'vat_id'
+        'vat_id',
+        'has_shipping',
+        'has_pickup',
     ];
 
     /**
@@ -71,7 +73,9 @@ class Company extends Model
         'telephone' => 'string',
         'iban' => 'string',
         'kvk' => 'string',
-        'vat_id' => 'string'
+        'vat_id' => 'string',
+        'has_shipping' => 'boolean',
+        'has_pickup' => 'boolean',
     ];
 
     /**

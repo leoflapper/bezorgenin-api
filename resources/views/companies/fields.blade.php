@@ -84,12 +84,6 @@
 
 <!-- Updated At Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    {!! Form::text('updated_at', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Updated At Field -->
-<div class="form-group col-sm-6">
     {!! Form::label('', 'Categorieën:') !!}
 
     @php $currentKitchens = []; @endphp
@@ -103,6 +97,20 @@
         'data-placeholder' => 'Click here to choose'
     ]) !!}
 </div>
+
+
+<!-- Vat Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('has_shipping', 'Mogelijkheid tot leveren:') !!}
+    {!! Form::checkbox('has_shipping',  $company->has_shipping, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Vat Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('has_pickup', 'Mogelijkheid tot afhalen:') !!}
+    {!! Form::checkbox('has_pickup', $company->has_pickup, ['class' => 'form-control']) !!}
+</div>
+
 
 <!-- Name Field -->
 <div class="form-group col-sm-12">

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Site;
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -32,6 +32,7 @@ class Order extends Model
     public $fillable = [
         'first_name',
         'last_name',
+        'is_pickup',
         'company_id',
         'street',
         'housenumber',
@@ -123,4 +124,5 @@ class Order extends Model
         $data['company'] = $this->company->toArray();
         return $data;
     }
+
 }
