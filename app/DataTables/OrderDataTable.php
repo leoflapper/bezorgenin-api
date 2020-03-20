@@ -65,11 +65,17 @@ class OrderDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'name',
-            'description',
-            'allergens',
-            'quantity',
-            'price'
+            'website',
+            'number',
+            'first_name',
+            'last_name',
+            'company_id',
+            'street',
+            'housenumber',
+            'city',
+            'email',
+            'telephone'
+
         ];
     }
 
