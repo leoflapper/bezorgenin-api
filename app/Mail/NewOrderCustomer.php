@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NewOrder extends Mailable
+class NewOrderCustomer extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,7 +33,6 @@ class NewOrder extends Mailable
     {
         return $this
             ->from(config('order.mail.from.email'), config('order.mail.from.name'))
-            //->replyTo(config('order.mail.reply_to.email'), config('order.mail.reply_to.name'))
-            ->view('emails.orders.created');
+            ->view('emails.orders.customer-new');
     }
 }

@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\CompanyDataTable;
+use App\Events\OrderCreated;
 use App\Http\Requests;
 use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
-use App\Mail\NewOrder;
+use App\Mail\NewOrderCustomer;
 use App\Models\Order;
 use App\Repositories\CompanyRepository;
 use Flash;

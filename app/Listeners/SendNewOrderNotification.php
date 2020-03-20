@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\OrderCreated;
+use App\Mail\NewOrderCustomer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendNewOrderNotification implements ShouldQueue
@@ -20,7 +21,9 @@ class SendNewOrderNotification implements ShouldQueue
 
     public function handle(OrderCreated $event)
     {
-        // Access the order using $event->order...
+        $newOrderCustomerMail = new NewOrderCustomer($event->order);
+        echo $newOrderCustomerMail->render();
+        exit;
     }
 
     /**

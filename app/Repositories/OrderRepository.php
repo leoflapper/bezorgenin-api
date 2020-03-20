@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Repositories\BaseRepository;
+use App\Site;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -42,10 +43,23 @@ class OrderRepository extends BaseRepository
 
     public function create($input)
     {
+
+        if($host = request()->getHost()) {
+            $parsedUrl = parse_url($host);
+            if(!isset($parsedUrl)) {
+                abort(404, 'Site does not exist');
+            }
+
+            if(!$site = Site::createByUrlPath($parsedUrl['path'])) {
+                abort(404, 'Site does not exist');
+            }
+        }
         /**
          * @var Order $order
          */
         $order = $this->makeModel()->fill($input);
+
+        $order->website = $site->getId();
 
         if(!$order->country_id) {
             $order->country_id = config('order.default_country_id');
@@ -84,7 +98,7 @@ class OrderRepository extends BaseRepository
 
         $order->orderProducts()->createMany($orderProducts);
 
-        event(new OrderCreated($order));
+        //event(new OrderCreated($order));
 
         return $order;
     }

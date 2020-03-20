@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Site;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -92,5 +93,34 @@ class Order extends Model
     public function orderProducts()
     {
         return $this->hasMany(\App\Models\OrderProduct::class);
+    }
+
+    /**
+     * @return Site
+     */
+    public function site()
+    {
+        return $this->getSiteAttribute();
+    }
+
+    /**
+     * Get the site class
+     *
+     * @return Site
+     */
+    public function getSiteAttribute()
+    {
+        return new Site($this->website);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function toArrayWithRelationships()
+    {
+        $data = $this->toArray();
+        $data['order_products'] = $this->orderProducts->toArray();
+        $data['company'] = $this->company->toArray();
+        return $data;
     }
 }
