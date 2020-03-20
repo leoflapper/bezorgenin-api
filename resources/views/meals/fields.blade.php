@@ -8,7 +8,7 @@
 </div>
 <!-- Company Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('company_id', 'Company Id:') !!}
+    {!! Form::label('company_id', 'Bedrijf:') !!}
 
     {!! Form::select('company_id', \App\Models\Company::get()->pluck('name', 'id'), null, [
         'class' => 'form-control',
@@ -17,7 +17,7 @@
 
 <!-- Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('name', 'Name:') !!}
+    {!! Form::label('name', 'Naam:') !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
 
@@ -29,13 +29,13 @@
 
 <!-- Description Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('description', 'Description:') !!}
+    {!! Form::label('description', 'Omschrijving:') !!}
     {!! Form::text('description', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Allergens Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('allergens', 'Allergens:') !!}
+    {!! Form::label('allergens', 'Allergieën:') !!}
     {!! Form::text('allergens', null, ['class' => 'form-control']) !!}
 </div>
 

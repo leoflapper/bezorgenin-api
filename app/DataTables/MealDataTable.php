@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Meal;
+use App\Util\Currency;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -17,7 +18,18 @@ class MealDataTable extends DataTable
     public function dataTable($query)
     {
         $dataTable = new EloquentDataTable($query);
-
+        $dataTable->editColumn('meal_category_id', function($meal)
+        {
+            return $meal->mealCategory->name;
+        });
+        $dataTable->editColumn('company_id', function($meal)
+        {
+            return $meal->company->name;
+        });
+        $dataTable->editColumn('price', function($meal)
+        {
+            return Currency::format($meal->price);
+        });
         return $dataTable->addColumn('action', 'meals.datatables_actions');
     }
 
@@ -65,11 +77,12 @@ class MealDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'meal_category_id' => ['searchable' => false],
-            'company_id' => ['searchable' => false],
-            'name',
-            'description',
-            'allergens'
+            ['data' => 'meal_category_id', 'name' => 'meal_category_id', 'title' => 'Categorie', 'searchable' => false],
+            ['data' => 'company_id', 'name' => 'company_id', 'title' => 'Bedrijf', 'searchable' => false],
+            ['data' => 'name', 'name' => 'name', 'title' => 'Naam'],
+            ['data' => 'price', 'name' => 'price', 'title' => 'Prijs'],
+            ['data' => 'description', 'name' => 'description', 'title' => 'Omschrijving', 'searchable' => false],
+
         ];
     }
 

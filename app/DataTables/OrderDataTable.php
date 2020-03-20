@@ -18,6 +18,21 @@ class OrderDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
+        $dataTable->editColumn('company_id', function($order)
+        {
+            return $order->company->name;
+        });
+
+        $dataTable->editColumn('street', function($order)
+        {
+            $address = $order->street . ' '. $order->housenumber;
+            if($order->housenumber_addition) {
+                $address .= $order->housenumber_addition;
+            }
+
+            $address .= ', '.$order->city;
+            return $address;
+        });
         return $dataTable->addColumn('action', 'orders.datatables_actions');
     }
 
@@ -46,7 +61,7 @@ class OrderDataTable extends DataTable
             ->parameters([
                 'dom'       => 'Bfrtip',
                 'stateSave' => true,
-                'order'     => [[0, 'desc']],
+                'order'     => [[2, 'desc']],
                 'buttons'   => [
                     ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',],
                     ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
@@ -65,16 +80,14 @@ class OrderDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'website',
-            'number',
-            'first_name',
-            'last_name',
-            'company_id',
-            'street',
-            'housenumber',
-            'city',
-            'email',
-            'telephone'
+            ['data' => 'company_id', 'name' => 'company_id', 'title' => 'Bedrijf'],
+            ['data' => 'number', 'name' => 'number', 'title' => 'Bestelnummer'],
+            ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Datum'],
+            ['data' => 'first_name', 'name' => 'first_name', 'title' => 'Voornaam'],
+            ['data' => 'last_name', 'name' => 'last_name', 'title' => 'Achternaam'],
+            ['data' => 'street', 'name' => 'street', 'title' => 'Adres'],
+            ['data' => 'email', 'name' => 'email', 'title' => 'E-mail'],
+            ['data' => 'telephone', 'name' => 'telephone', 'title' => 'Tel. nr']
 
         ];
     }

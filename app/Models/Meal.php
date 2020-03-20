@@ -66,7 +66,7 @@ class Meal extends Model
      **/
     public function mealCategory()
     {
-        return $this->hasOne(\App\Models\MealCategory::class, 'meal_categories', 'id');
+        return $this->hasOne(\App\Models\MealCategory::class, 'id', 'meal_category_id');
     }
 
     /**
@@ -74,6 +74,6 @@ class Meal extends Model
      **/
     public function company()
     {
-        return $this->hasOne(\App\Models\Company::class, 'company', 'id');
+        return $this->hasOne(\App\Models\Company::class, 'id', 'company_id');
     }
 }
