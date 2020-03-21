@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Order;
+use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -64,7 +65,19 @@ class OrderDataTable extends DataTable
      */
     public function query(Order $model)
     {
-        return $model->newQuery();
+        if(auth()->user()->hasRole('admin')) {
+            return $model->newQuery();
+        } else {
+            return $model->newQuery()->whereHas('company', function (Builder $query) {
+
+                $ids = [];
+                foreach (auth()->user()->companies as $company) {
+                    $ids[] = $company->id;
+                }
+                $query->whereIn('id', $ids);
+
+            });;
+        }
     }
 
     /**
@@ -82,14 +95,25 @@ class OrderDataTable extends DataTable
                 'dom'       => 'Bfrtip',
                 'stateSave' => true,
                 'order'     => [[2, 'desc']],
-                'buttons'   => [
-                    ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
-                ],
+                'buttons'   => $this->getButtons()
             ]);
+    }
+
+    /**
+     * @return array
+     */
+    private function getButtons(): array
+    {
+        $buttons = [
+            ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
+            ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
+            ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
+            ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
+        ];
+        //if(auth()->user()->hasRole('admin')) {
+        //array_unshift($buttons,  ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',]);
+        //}
+        return $buttons;
     }
 
     /**

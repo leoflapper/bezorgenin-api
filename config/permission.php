@@ -137,10 +137,11 @@ return [
         'addresses',
         'meals',
         'kitchens',
-        'meal_categories',
+        'mealCategories',
         'orders'
     ],
     'app_permission_settings' => [
+        'admin' => '*',
         'company' => [
             'companies' => [
                 'index', 'show', 'edit', 'update'
@@ -152,14 +153,13 @@ return [
             'kitchens' => [
                 'index', 'show', 'create', 'store'
             ],
-            'meal_categories' => [
+            'mealCategories' => [
                 'index', 'show', 'create', 'store'
             ],
             'orders' => [
                 'index', 'show', 'edit', 'update', 'destroy'
             ]
-        ],
-        'admin' => '*',
+        ]
     ]
 
 ];

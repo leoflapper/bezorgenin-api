@@ -114,4 +114,24 @@ class OrderRepository extends BaseRepository
         $hash = substr(Hash::make($order->first_name . $order->last_name), 15, 6);
         return $prefix.'-'.$hash;
     }
+
+    public function update($input, $id)
+    {
+        if(isset($input['country_id'])) {
+            unset($input['country_id']);
+        }
+        if(isset($input['meals'])) {
+            unset($input['meals']);
+        }
+        return parent::update($input, $id);
+    }
+
+    /**
+     * @param int $companyId
+     * @return bool
+     */
+    private function authUserHasCompany(int $companyId): bool
+    {
+        return (bool)auth()->user()->companies()->where('id', $companyId)->first();
+    }
 }

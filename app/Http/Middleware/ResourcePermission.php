@@ -22,9 +22,8 @@ class ResourcePermission
             throw UnauthorizedException::notLoggedIn();
         }
 
-
         if(!$routeName = $request->route()->getName()) {
-            throw new \Illuminate\Validation\UnauthorizedException(413);
+            throw new \Illuminate\Validation\UnauthorizedException(403);
         }
 
         return (new PermissionMiddleware())->handle($request, $next, [$routeName]);

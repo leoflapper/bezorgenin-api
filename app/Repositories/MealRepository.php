@@ -46,7 +46,7 @@ class MealRepository extends BaseRepository
         $meal = null;
         if($meal = parent::find($id, $columns)) {
             if(!auth()->user()->hasRole('admin')) {
-                if(!$this->userHasCompany($meal->company_id)) {
+                if(!$this->authUserHasCompany($meal->company_id)) {
                     return null;
                 }
             }
@@ -73,7 +73,7 @@ class MealRepository extends BaseRepository
     private function setCompanyId(array $input): array
     {
         if(!auth()->user()->hasRole('admin')) {
-            if(!$this->userHasCompany($input['company_id'])) {
+            if(!$this->authUserHasCompany($input['company_id'])) {
                 $input['company_id'] = auth()->user()->companies()->first()->id;
             }
         }
@@ -84,7 +84,7 @@ class MealRepository extends BaseRepository
      * @param int $companyId
      * @return bool
      */
-    private function userHasCompany(int $companyId): bool
+    private function authUserHasCompany(int $companyId): bool
     {
        return (bool)auth()->user()->companies()->where('id', $companyId)->first();
     }

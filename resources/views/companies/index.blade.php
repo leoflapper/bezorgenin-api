@@ -5,7 +5,7 @@
         <h1 class="pull-left">Bedrijven</h1>
         <h1 class="pull-right">
             @role('admin')
-           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{{ route('companies.create') }}">Add New</a>
+                <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{{ route('companies.create') }}">Add New</a>
             @endrole
         </h1>
     </section>

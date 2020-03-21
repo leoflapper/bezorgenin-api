@@ -59,7 +59,10 @@ class CompanyDataTable extends DataTable
             ]);
     }
 
-    private function getButtons()
+    /**
+     * @return array
+     */
+    private function getButtons(): array
     {
         $buttons = [
             ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],

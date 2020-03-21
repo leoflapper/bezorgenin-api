@@ -47,14 +47,25 @@ class KitchenDataTable extends DataTable
                 'dom'       => 'Bfrtip',
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
-                'buttons'   => [
-                    ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
-                ],
+                'buttons'   => $this->getButtons(),
             ]);
+    }
+
+    /**
+     * @return array
+     */
+    private function getButtons(): array
+    {
+        $buttons = [
+            ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
+            ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
+            ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
+            ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
+        ];
+        //if(auth()->user()->hasRole('admin')) {
+            array_unshift($buttons,  ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',]);
+        //}
+        return $buttons;
     }
 
     /**

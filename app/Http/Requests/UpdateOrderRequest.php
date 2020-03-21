@@ -26,7 +26,10 @@ class UpdateOrderRequest extends FormRequest
     public function rules()
     {
         $rules = Order::$rules;
-        
+
+        $rules['meals'] = '';
+        $rules['company_id'] = '';
+
         return $rules;
     }
 }

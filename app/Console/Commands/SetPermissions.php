@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class SetPermissions extends Command
 {
@@ -59,12 +60,15 @@ class SetPermissions extends Command
      */
     public function handle()
     {
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
         foreach (config('permission.app_permission_settings') as $name => $rolePermissionsResources) {
             $role = $this->getOrCreateRole($name);
-
             $permissionList = [];
+
             if($rolePermissionsResources === '*') {
+
                 foreach (config('permission.app_permission_resources') as $resourceItem) {
+
                     foreach ($this->resourceActions as $resourceActionsItem) {
                         $permissionList[] = $this->getOrCreatePermission($resourceItem.'.'.$resourceActionsItem);
                     }
@@ -81,6 +85,7 @@ class SetPermissions extends Command
                     }
                 }
             }
+
             $role->syncPermissions($permissionList);
             $this->output->success(sprintf('%s %s permission synced', $role->name, count($permissionList)));
         }
