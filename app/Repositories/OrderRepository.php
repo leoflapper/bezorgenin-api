@@ -44,7 +44,7 @@ class OrderRepository extends BaseRepository
     public function create($input)
     {
 
-        $site = new Site('sneekbezorgd');
+        $site = new Site('sneekbezorgt');
 //        if($host = request()->headers->get('Origin')) {
 //            $parsedUrl = parse_url($host);
 //
