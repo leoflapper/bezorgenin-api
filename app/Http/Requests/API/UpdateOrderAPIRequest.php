@@ -25,7 +25,22 @@ class UpdateOrderAPIRequest extends APIRequest
     public function rules()
     {
         $rules = Order::$rules;
-        
+
         return $rules;
+    }
+
+    public function validate(array $rules, ...$params)
+    {
+        if(isset($params[0]['is_pickup']) && false == $params[0]['is_pickup']) {
+            $rules['street'] = 'required';
+            $rules['housenumber'] = 'required|integer';
+            $rules['housenumber_addition'] = '';
+            $rules['postcode'] = 'required';
+            $rules['city'] = 'required';
+            $rules['country_id'] = 'required';
+        }
+
+        return parent::validate($rules, $params);
+
     }
 }

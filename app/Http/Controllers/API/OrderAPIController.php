@@ -55,6 +55,8 @@ class OrderAPIController extends AppBaseController
     {
         $input = $request->all();
 
+        $request->validate(Order::$rules, $input);
+
         $order = $this->orderRepository->create($input);
 
         return $this->sendResponse($order->toArrayWithRelationships(), 'Order saved successfully');
