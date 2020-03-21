@@ -134,7 +134,7 @@ class Company extends Model
      **/
     public function users()
     {
-        return $this->hasOne(\App\Models\User::class, 'id', 'user_id');
+        return $this->hasOne(\App\User::class, 'id', 'user_id');
     }
 
     public function toArrayWithRelationships()

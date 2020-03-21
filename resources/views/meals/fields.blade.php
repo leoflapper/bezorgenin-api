@@ -10,7 +10,15 @@
 <div class="form-group col-sm-6">
     {!! Form::label('company_id', 'Bedrijf:') !!}
 
-    {!! Form::select('company_id', \App\Models\Company::get()->pluck('name', 'id'), null, [
+    @php
+        if(auth()->user()->hasRole('admin')) :
+            $companies = \App\Models\Company::get()->pluck('name', 'id');
+        else :
+            $companies = auth()->user()->companies()->pluck('name', 'id');
+        endif;
+
+    @endphp
+    {!! Form::select('company_id', $companies, null, [
         'class' => 'form-control',
     ]) !!}
 </div>

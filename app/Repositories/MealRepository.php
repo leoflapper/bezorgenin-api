@@ -41,6 +41,54 @@ class MealRepository extends BaseRepository
         return Meal::class;
     }
 
+    public function find($id, $columns = ['*'])
+    {
+        $meal = null;
+        if($meal = parent::find($id, $columns)) {
+            if(!auth()->user()->hasRole('admin')) {
+                if(!$this->userHasCompany($meal->company_id)) {
+                    return null;
+                }
+            }
+        }
+        return $meal;
+    }
+
+    public function create($input)
+    {
+        $input = $this->setCompanyId($input);
+        return parent::create($input);
+    }
+
+    public function update($input, $id)
+    {
+        $input = $this->setCompanyId($input);
+        return parent::update($input, $id);
+    }
+
+    /**
+     * @param array $input
+     * @return array
+     */
+    private function setCompanyId(array $input): array
+    {
+        if(!auth()->user()->hasRole('admin')) {
+            if(!$this->userHasCompany($input['company_id'])) {
+                $input['company_id'] = auth()->user()->companies()->first()->id;
+            }
+        }
+        return $input;
+    }
+
+    /**
+     * @param int $companyId
+     * @return bool
+     */
+    private function userHasCompany(int $companyId): bool
+    {
+       return (bool)auth()->user()->companies()->where('id', $companyId)->first();
+    }
+
     /**
      * @param int $id
      * @param Company $company

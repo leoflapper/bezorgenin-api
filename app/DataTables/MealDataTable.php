@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Meal;
 use App\Util\Currency;
+use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -41,7 +42,19 @@ class MealDataTable extends DataTable
      */
     public function query(Meal $model)
     {
-        return $model->newQuery();
+        if(auth()->user()->hasRole('admin')) {
+            return $model->newQuery();
+        } else {
+            return $model->newQuery()->whereHas('company', function (Builder $query) {
+
+                $ids = [];
+                foreach (auth()->user()->companies as $company) {
+                   $ids[] = $company->id;
+                }
+                $query->whereIn('id', $ids);
+
+            });;
+        }
     }
 
     /**
