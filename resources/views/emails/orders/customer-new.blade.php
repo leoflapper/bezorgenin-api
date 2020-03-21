@@ -120,10 +120,12 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                                                 <table cellspacing="0" cellpadding="0" width="100%" style="color: #0A3847; font-family: 'Open Sans', Helvetica, Arial, sans-serif;">
 
 
+                                                                    @if($order->is_pickup == false)
                                                                     <tr>
                                                                         <td align="left" width="60%" height="30" style="line-height: 30px; width: 60%;">Bezorgkosten</td>
                                                                         <td align="right" height="30" style="line-height: 30px;">@if(0 !== $order->shipping_price) @currency($order->shipping_price) @else Gratis @endif</td>
                                                                     </tr>
+                                                                    @endif
                                                                     <tr><td colspan="2" style="border-bottom: 1px solid #e9e9e9; line-height: 15px;" height="15">&nbsp;</td></tr><tr><td colspan="2" height="15" style="line-height: 15px;">&nbsp;</td></tr><tr>
                                                                         <td align="left" width="60%" height="30" style="line-height:30px; width:60%;"><strong>Totaalbedrag</strong></td>
                                                                         <td align="right" height="30" style="line-height:30px;"><strong>@currency($order->total_price)</strong></td>
@@ -163,7 +165,13 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                                                         </td>
                                                                         <td width="21" height="71">&nbsp;</td>
                                                                         <td height="71" style="font-size: 18px; font-family: 'Open Sans', Avant Garde, Century Gothic, Helvetica, Arial, sans-serif;" valign="middle">
-                                                                            <strong>Bezorginformatie</strong>
+                                                                            <strong>
+                                                                                @if($order->is_pickup == false)
+                                                                                    Bezorginformatie
+                                                                                @else
+                                                                                    Afhaalinformatie
+                                                                                @endif
+                                                                            </strong>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -171,22 +179,42 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                                         </tr>
                                                         <tr><td height="15">&nbsp;</td></tr>
                                                         <tr>
-                                                            <td align="left" height="25" valign="middle"><b>Details</b></td>
+                                                            <td align="left" height="25" valign="middle"><b>Adres</b></td>
                                                         </tr>
+                                                        <tr>
+                                                            <td>Het restaurant neemt contact met je op. Houd dus je telefoon en
+                                                                je e-mail in de gaten.<br><br>
+                                                            </td>
+                                                        </tr>
+                                                        @if($order->is_pickup == false)
 
-                                                        <tr>
-                                                            <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->first_name }} {{ $order->last_name }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->street }} {{ $order->housenumber }} {{ $order->housenumber_addition }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->postcode }} {{ $order->city }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->telephone }}</td>
-                                                        </tr>
+                                                            <tr>
+                                                                <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->first_name }} {{ $order->last_name }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->street }} {{ $order->housenumber }} {{ $order->housenumber_addition }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->postcode }} {{ $order->city }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->telephone }}</td>
+                                                            </tr>
+                                                        @else
+                                                            <tr>
+                                                                <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->company->name }} </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->company->address->street }} {{ $order->company->address->housenumber }} {{ $order->company->address->housenumber_addition }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->company->address->postcode }} {{ $order->company->address->city }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->company->telephone }}</td>
+                                                            </tr>
 
+                                                        @endif
                                                         <tr>
                                                             <td height="25">&nbsp;</td>
                                                         </tr>
@@ -204,10 +232,7 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                         <table cellspacing="0" cellpadding="0" width="90%" style="font-size:14px; line-height: 28px; color: #666666; font-family: 'Open Sans', Helvetica, Arial, sans-serif;">
                                             <tr>
                                                 <td>
-                                                    Het restaurant neemt contact met je op. Houd dus je telefoon en
-                                                    je e-mail in de gaten.<br>
-                                                    <br>
-                                                    Namens {{ $order->company->name }} willen we je graag bedanken voor je bestelling. Eet smakelijk!
+                                                    Namens team {{ $order->company->name }} willen we je graag bedanken voor je bestelling. Eet smakelijk!
                                                 </td>
                                             </tr>
                                         </table>

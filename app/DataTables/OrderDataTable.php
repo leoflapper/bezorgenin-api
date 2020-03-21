@@ -20,7 +20,7 @@ class OrderDataTable extends DataTable
 
         $dataTable->editColumn('is_pickup', function($order)
         {
-            $result = 'Verzenden';
+            $result = 'Bezorgen';
 
            if(true == $order->is_pickup) {
                $result = 'Afhalen';
