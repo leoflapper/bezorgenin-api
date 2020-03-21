@@ -160,10 +160,6 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                                             <td align="left" valign="middle" height="71" style="border-bottom: 1px solid #e9e9e9; font-family: 'Open Sans', Helvetica, Arial, sans-serif; font-size: 18px;">
                                                                 <table cellspacing="0" cellpadding="0" style="color: #0A3847;">
                                                                     <tr>
-                                                                        <td height="71" valign="middle" align="left">
-                                                                            <img src="https://static.takeaway.com/images/mail_images/orderconfirmation/delivery-retina.png" height="16" />
-                                                                        </td>
-                                                                        <td width="21" height="71">&nbsp;</td>
                                                                         <td height="71" style="font-size: 18px; font-family: 'Open Sans', Avant Garde, Century Gothic, Helvetica, Arial, sans-serif;" valign="middle">
                                                                             <strong>
                                                                                 @if($order->is_pickup == false)
