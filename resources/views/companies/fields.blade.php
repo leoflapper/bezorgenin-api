@@ -1,19 +1,22 @@
 <!-- Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('name', 'Name:') !!}
+    {!! Form::label('name', 'Naam:') !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
-<!-- Slug Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('slug', 'Slug:') !!}
-    {!! Form::text('slug', null, ['class' => 'form-control']) !!}
-</div>
 
+@role('admin')
+    <!-- Slug Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('slug', 'Slug:') !!}
+        {!! Form::text('slug', null, ['class' => 'form-control']) !!}
+    </div>
+@endrole
 <!-- Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('image_url', 'Afbeeldings URL:') !!}
+    {!! Form::label('image_url', 'Restaurant afbeelding URL:') !!}
     {!! Form::text('image_url', null, ['class' => 'form-control']) !!}
 </div>
+<hr style="width: 100%; " />
 <!-- First Name Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('first_name', 'First Name:') !!}
@@ -26,59 +29,70 @@
     {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Address Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('address_id', 'Address:') !!}
+    {!! Form::label('address.street', 'Straat:') !!}
+    {!! Form::text('address.street', $company->address->street, ['class' => 'form-control']) !!}
+</div>
 
-    @php $currentAddresses = []; @endphp
-    @if(isset($company))
-        @php $currentAddresses = $company->address->pluck('id')->toArray() @endphp
-    @endif
-    {!! Form::select('address_id', \App\Models\Address::get()->pluck('identifier', 'id'), $currentAddresses , [
-        'id' => 'address',
-        'class' => 'form-control'
-    ]) !!}
+<div class="form-group col-sm-6">
+    {!! Form::label('address.housenumber', 'Huisnummer:') !!}
+    {!! Form::text('address.housenumber', $company->address->housenumber, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('address.housenumber_addition', 'Huisnummer toevoeging:') !!}
+    {!! Form::text('address.housenumber_addition', $company->address->housenumber_addition, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('address.postcode', 'Postcode:') !!}
+    {!! Form::text('address.postcode', $company->address->postcode, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('address.city', 'Stad:') !!}
+    {!! Form::text('address.city', $company->address->city, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Delivery Costs Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('delivery_costs', 'Delivery Costs:') !!}
+    {!! Form::label('delivery_costs', 'Bezorgkosten:') !!}
     {!! Form::text('delivery_costs', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Min Order Amount Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('min_order_amount', 'Min Order Amount:') !!}
+    {!! Form::label('min_order_amount', 'Minimale bestelbedrag:') !!}
     {!! Form::text('min_order_amount', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Email Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('email', 'Email:') !!}
+    {!! Form::label('email', 'E-mailadres:') !!}
     {!! Form::text('email', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Telephone Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('telephone', 'Telephone:') !!}
+    {!! Form::label('telephone', 'Telefoonnummer:') !!}
     {!! Form::text('telephone', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Iban Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('iban', 'Iban:') !!}
+    {!! Form::label('iban', 'IBAN rekeningnummer:') !!}
     {!! Form::text('iban', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Kvk Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('kvk', 'Kvk:') !!}
+    {!! Form::label('kvk', 'KVK-nummer:') !!}
     {!! Form::text('kvk', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Vat Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('vat_id', 'Vat Id:') !!}
+    {!! Form::label('vat_id', 'BTW-nummer:') !!}
     {!! Form::text('vat_id', null, ['class' => 'form-control']) !!}
 </div>
 
@@ -101,7 +115,7 @@
 
 <!-- Vat Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('has_shipping', 'Mogelijkheid tot leveren:') !!}
+    {!! Form::label('has_shipping', 'Mogelijkheid tot bezorgen:') !!}
     {!! Form::checkbox('has_shipping', true, $company->has_shipping) !!}
 </div>
 
@@ -114,7 +128,7 @@
 
 <!-- Name Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('description', 'Omschrijving:') !!}
+    {!! Form::label('description', 'Korte omschrijving:') !!}
     {!! Form::textArea('description', null, ['class' => 'form-control']) !!}
 </div>
 

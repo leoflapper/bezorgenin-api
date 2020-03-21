@@ -132,25 +132,34 @@ return [
 
         'store' => 'default',
     ],
+    'app_permission_resources' => [
+        'companies',
+        'addresses',
+        'meals',
+        'kitchens',
+        'meal_categories',
+        'orders'
+    ],
     'app_permission_settings' => [
         'company' => [
-            'company' => [
-                'read', 'update'
+            'companies' => [
+                'index', 'show', 'edit', 'update'
             ],
-            'address' => [
-                'read', 'update'
+            'addresses' => [
+                'index', 'show', 'edit', 'update'
             ],
-            'meal' => '*',
-            'kitchen' => [
-                'read', 'create'
+            'meals' => '*',
+            'kitchens' => [
+                'index', 'show', 'create', 'store'
             ],
-            'meal_category' => [
-                'read', 'create'
+            'meal_categories' => [
+                'index', 'show', 'create', 'store'
             ],
-            'order' => [
-                'read', 'update', 'delete'
+            'orders' => [
+                'index', 'show', 'edit', 'update', 'destroy'
             ]
         ],
         'admin' => '*',
     ]
+
 ];

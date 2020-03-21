@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Company;
+use App\Models\User;
 
-class UpdateCompanyRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
 
     /**
@@ -25,10 +25,8 @@ class UpdateCompanyRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = Company::$rules;
-
-        $rules['slug'] = '';
-
+        $rules = User::$rules;
+        
         return $rules;
     }
 }

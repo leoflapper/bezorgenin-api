@@ -2,12 +2,11 @@
 
 namespace App\DataTables;
 
-use App\Models\Company;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\User;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
-class CompanyDataTable extends DataTable
+class UserDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,24 +18,18 @@ class CompanyDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'companies.datatables_actions');
+        return $dataTable->addColumn('action', 'users.datatables_actions');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Company $model
+     * @param \App\Models\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Company $model)
+    public function query(User $model)
     {
-        if(auth()->user()->hasRole('admin')) {
-            return $model->newQuery();
-        } else {
-            return $model->newQuery()->whereHas('users', function (Builder $query) {
-                $query->where('id', auth()->user()->id);
-            });;
-        }
+        return $model->newQuery();
     }
 
     /**
@@ -46,7 +39,6 @@ class CompanyDataTable extends DataTable
      */
     public function html()
     {
-
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
@@ -55,22 +47,14 @@ class CompanyDataTable extends DataTable
                 'dom'       => 'Bfrtip',
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
-                'buttons'   => $this->getButtons()
+                'buttons'   => [
+                    ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',],
+                    ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
+                    ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
+                    ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
+                    ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
+                ],
             ]);
-    }
-
-    private function getButtons()
-    {
-        $buttons = [
-            ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
-            ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
-            ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
-            ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
-        ];
-        if(auth()->user()->hasRole('admin')) {
-            array_unshift($buttons,  ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',]);
-        }
-        return $buttons;
     }
 
     /**
@@ -83,8 +67,7 @@ class CompanyDataTable extends DataTable
         return [
             'name',
             'email',
-            'telephone',
-            'vat_id'
+            'email_verified_at',
         ];
     }
 
@@ -95,6 +78,6 @@ class CompanyDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'companiesdatatable_' . time();
+        return 'usersdatatable_' . time();
     }
 }

@@ -129,6 +129,14 @@ class Company extends Model
         return $this->hasMany(\App\Models\Order::class, 'company_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function users()
+    {
+        return $this->hasOne(\App\Models\User::class, 'id', 'user_id');
+    }
+
     public function toArrayWithRelationships()
     {
         $data = $this->toArray();

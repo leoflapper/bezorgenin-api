@@ -23,17 +23,23 @@ class SetPermissions extends Command
     protected $description = 'Sets the permissions for the various roles';
 
 
-    protected $crud = [
-        'create', 'read', 'update', 'delete'
+    protected $resourceActions = [
+        'index',
+        'create',
+        'store',
+        'show',
+        'edit',
+        'update',
+        'destroy'
     ];
 
-    protected $models = [
-            'company',
-            'address',
-            'meal',
-            'kitchen',
-            'meal_category',
-            'order'
+    protected $resources = [
+        'companies',
+        'addresses',
+        'meals',
+        'kitchens',
+        'meal_categories',
+        'orders'
     ];
 
     /**
@@ -53,37 +59,25 @@ class SetPermissions extends Command
      */
     public function handle()
     {
-        foreach (config('permission.app_permission_settings') as $roleItem => $rolePermissionsItems) {
-            if(!$role = Role::query()->where('name', $roleItem)->first()) {
-                $role = Role::create(['name' => $roleItem]);
-            }
+        foreach (config('permission.app_permission_settings') as $name => $rolePermissionsResources) {
+            $role = $this->getOrCreateRole($name);
 
             $permissionList = [];
-            if($rolePermissionsItems === '*') {
-                foreach ($this->models as $modelItem) {
-                    foreach ($this->crud as $crudItem) {
-                        $permissionName = $modelItem.':'.$crudItem;
-                        if(!$permission = Permission::query()->where('name', $modelItem.':'.$crudItem)->first()) {
-                            $permission = Permission::create(['name' => $permissionName]);
-                        }
-
-                        $permissionList[] = $permission;
+            if($rolePermissionsResources === '*') {
+                foreach (config('permission.app_permission_resources') as $resourceItem) {
+                    foreach ($this->resourceActions as $resourceActionsItem) {
+                        $permissionList[] = $this->getOrCreatePermission($resourceItem.'.'.$resourceActionsItem);
                     }
 
                 }
             } else {
-                foreach ($rolePermissionsItems as $key => $rolePermissionsItem) {
+                foreach ($rolePermissionsResources as $key => $rolePermissionsItem) {
 
                     if($rolePermissionsItem === '*') {
-                        $rolePermissionsItem = $this->crud;
+                        $rolePermissionsItem = $this->resourceActions;
                     }
                     foreach ($rolePermissionsItem as $permissionItem) {
-                        $permissionName = $key.':'.$permissionItem;
-                        if(!$permission = Permission::query()->where('name', $key.':'.$permissionItem)->first()) {
-                            $permission = Permission::create(['name' => $permissionName]);
-                        }
-
-                        $permissionList[] = $permission;
+                        $permissionList[] = $this->getOrCreatePermission($key.'.'.$permissionItem);
                     }
                 }
             }
@@ -92,5 +86,29 @@ class SetPermissions extends Command
         }
 
         $this->output->success('Done');
+    }
+
+    /**
+     * @param string $name
+     * @return Role
+     */
+    private function getOrCreateRole(string $name): Role
+    {
+        if(!$role = Role::query()->where('name', $name)->first()) {
+            $role = Role::create(['name' => $name]);
+        }
+        return $role;
+    }
+
+    /**
+     * @param string $name
+     * @return Permission
+     */
+    private function getOrCreatePermission(string $name): Permission
+    {
+        if(!$permission = Permission::query()->where('name', $name)->first()) {
+            $permission = Permission::create(['name' => $name]);
+        }
+        return $permission;
     }
 }

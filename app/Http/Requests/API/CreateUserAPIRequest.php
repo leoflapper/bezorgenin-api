@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\API;
 
-use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Company;
+use App\Models\User;
+use InfyOm\Generator\Request\APIRequest;
 
-class UpdateCompanyRequest extends FormRequest
+class CreateUserAPIRequest extends APIRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,10 +24,6 @@ class UpdateCompanyRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = Company::$rules;
-
-        $rules['slug'] = '';
-
-        return $rules;
+        return User::$rules;
     }
 }

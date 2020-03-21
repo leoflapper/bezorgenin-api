@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\CompanyDataTable;
 use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Repositories\AddressRepository;
 use App\Repositories\CompanyRepository;
 use Flash;
 use Response;
@@ -112,6 +113,7 @@ class CompanyController extends AppBaseController
     {
         $company = $this->companyRepository->find($id);
 
+
         if (empty($company)) {
             Flash::error('Company not found');
 
@@ -122,6 +124,11 @@ class CompanyController extends AppBaseController
         $input = $this->setBooleans($input);
 
         $company = $this->companyRepository->update($input, $id);
+
+        if($addressInput = $this->getAddressInput($input)) {
+            $addressRepository = app(AddressRepository::class);
+            $company->address = $addressRepository->update($addressInput, $company->address->id);
+        }
 
         Flash::success('Company updated successfully.');
 
@@ -171,4 +178,20 @@ class CompanyController extends AppBaseController
 
         return $input;
     }
+
+    /**
+     * @param array $input
+     * @return array
+     */
+    private function getAddressInput(array $input)
+    {
+        $addressInput = [];
+        foreach ($input as $key => $value) {
+            if(strpos($key, 'address_') !== false) {
+                $addressInput[str_replace('address_', '', $key)] = $value;
+            }
+        }
+        return $addressInput;
+    }
+
 }

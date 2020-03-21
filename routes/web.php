@@ -15,25 +15,30 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->middleware('verified');
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => ['verified']], function () {
+    Route::resource('users', 'UserController');
+});
 
 
-Route::resource('companies', 'CompanyController')->middleware('verified');
+Route::group(['middleware' => ['verified', 'crud_permission']], function () {
+
+    Route::resource('companies', 'CompanyController');
 
 
-Route::resource('addresses', 'AddressController')->middleware('verified');
+    Route::resource('addresses', 'AddressController');
 
-Route::resource('mealCategories', 'MealCategoryController')->middleware('verified');
+    Route::resource('mealCategories', 'MealCategoryController');
 
-Route::resource('kitchens', 'KitchenController')->middleware('verified');
+    Route::resource('kitchens', 'KitchenController');
 
-Route::resource('meals', 'MealController')->middleware('verified');
+    Route::resource('meals', 'MealController');
 
-Route::resource('orders', 'OrderController',  [ 'only' => ['index', 'show', 'edit', 'update', 'destroy']])->middleware('verified');
+    Route::resource('orders', 'OrderController',  [ 'only' => ['index', 'show', 'edit', 'update', 'destroy']]);
 
-Route::resource('orderProducts', 'OrderProductController',  [ 'only' => []])->middleware('verified');
+    Route::resource('orderProducts', 'OrderProductController',  [ 'only' => []]);
+
+});
