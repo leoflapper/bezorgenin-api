@@ -1,12 +1,12 @@
 @php
 
-/**
-* @var $site \App\Site
- */
-$site = $order->site();
+    /**
+    * @var $site \App\Site
+     */
+    $site = $order->site();
 
-$backgroundColor = $site->getColor('background-color', '#f1f2f6');
-$primaryColor = $site->getColor('primary-color', '#2f3640');
+    $backgroundColor = $site->getColor('background-color', '#f1f2f6');
+    $primaryColor = $site->getColor('primary-color', '#2f3640');
 
 @endphp
 
@@ -51,15 +51,27 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                             <tr>
                                                 <td align="center" height="120" style="line-height: 30px;">
                                                     <strong>
-                                                        Hallo {{ $order->first_name }} {{ $order->last_name }},<br>bedankt voor je bestelling!
+                                                        @php
+                                                            $shippingMethod = 'afhaal';
+                                                            if($order->is_pickup == false):
+                                                                $shippingMethod = 'bezorg';
+                                                            endif
+
+                                                        @endphp
+                                                        [{{$shippingMethod}}] Nieuwe {{$shippingMethod}}bestelling van {{ $order->first_name }} {{ $order->last_name }}!
                                                     </strong>
                                                 </td>
                                             </tr>
 
                                             <tr>
                                                 <td align="center" style="font-size: 14px; line-height: 30px; font-family: 'Roboto Slab', 'Open Sans', Helvetica, Arial, sans-serif;">
-                                                    We hebben je bestelling succesvol ontvangen en verzonden naar {{ $order->company->name }}. Het bestelnummer is: <strong>{{ $order->number }}</strong>. Heb je vragen of opmerkingen over je bestelling? Neem dan telefonisch contact op met het restaurant via
-                                                    <a href="tel:{{ $order->company->telephone }}" style="color: {{ $primaryColor }}; text-decoration: none;">{{ $order->company->telephone  }}</a>.
+                                                    Het bestelnummer is: <strong>{{ $order->number }}</strong>.
+
+                                                    @if($order->note)
+                                                        <br><br>
+                                                        Notitie van de klant:<br>
+                                                        {{ $order->note }}
+                                                    @endif
                                                 </td>
                                             </tr>
                                         </table>
@@ -121,10 +133,10 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
 
 
                                                                     @if($order->is_pickup == false)
-                                                                    <tr>
-                                                                        <td align="left" width="60%" height="30" style="line-height: 30px; width: 60%;">Bezorgkosten</td>
-                                                                        <td align="right" height="30" style="line-height: 30px;">@if(0 !== $order->shipping_price) @currency($order->shipping_price) @else Gratis @endif</td>
-                                                                    </tr>
+                                                                        <tr>
+                                                                            <td align="left" width="60%" height="30" style="line-height: 30px; width: 60%;">Bezorgkosten</td>
+                                                                            <td align="right" height="30" style="line-height: 30px;">@if(0 !== $order->shipping_price) @currency($order->shipping_price) @else Gratis @endif</td>
+                                                                        </tr>
                                                                     @endif
                                                                     <tr><td colspan="2" style="border-bottom: 1px solid #e9e9e9; line-height: 15px;" height="15">&nbsp;</td></tr><tr><td colspan="2" height="15" style="line-height: 15px;">&nbsp;</td></tr><tr>
                                                                         <td align="left" width="60%" height="30" style="line-height:30px; width:60%;"><strong>Totaalbedrag</strong></td>
@@ -177,13 +189,12 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                                         <tr>
                                                             <td align="left" height="25" valign="middle"><b>Adres</b></td>
                                                         </tr>
-                                                        <tr>
-                                                            <td>Het restaurant neemt contact met je op. Houd dus je telefoon en
-                                                                je e-mail in de gaten.<br><br>
-                                                            </td>
-                                                        </tr>
-                                                        @if($order->is_pickup == false)
 
+                                                        @if($order->is_pickup == false)
+                                                            <tr>
+                                                                <td>De bestelling moet bezorgd worden op het volgende adres:<br>
+                                                                </td>
+                                                            </tr>
                                                             <tr>
                                                                 <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->first_name }} {{ $order->last_name }}</td>
                                                             </tr>
@@ -198,6 +209,10 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                                             </tr>
                                                         @else
                                                             <tr>
+                                                                <td>De bestelling wordt afgehaald op:<br>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
                                                                 <td align="left" height="25" valign="middle" style="line-height:25px;">{{ $order->company->name }} </td>
                                                             </tr>
                                                             <tr>
@@ -211,11 +226,6 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                                             </tr>
 
                                                         @endif
-                                                        @if($order->note)
-                                                            <tr>
-                                                                <td align="left"><strong>Notitie</strong>: {{ $order->note }}</td>
-                                                            </tr>
-                                                        @endif
                                                         <tr>
                                                             <td height="25">&nbsp;</td>
                                                         </tr>
@@ -226,19 +236,6 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                     </td>
                                 </tr>
 
-                                <tr><td height="20" style="line-height: 20px;">&nbsp;</td></tr>
-
-                                <tr>
-                                    <td align="center">
-                                        <table cellspacing="0" cellpadding="0" width="90%" style="font-size:14px; line-height: 28px; color: #666666; font-family: 'Open Sans', Helvetica, Arial, sans-serif;">
-                                            <tr>
-                                                <td>
-                                                    Namens team {{ $order->company->name }} willen we je graag bedanken voor je bestelling. Eet smakelijk!
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
                                 <tr><td height="20" style="line-height: 20px;">&nbsp;</td></tr>
                             </table>
                         </td>
