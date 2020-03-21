@@ -132,4 +132,25 @@ return [
 
         'store' => 'default',
     ],
+    'app_permission_settings' => [
+        'company' => [
+            'company' => [
+                'read', 'update'
+            ],
+            'address' => [
+                'read', 'update'
+            ],
+            'meal' => '*',
+            'kitchen' => [
+                'read', 'create'
+            ],
+            'meal_category' => [
+                'read', 'create'
+            ],
+            'order' => [
+                'read', 'update', 'delete'
+            ]
+        ],
+        'admin' => '*',
+    ]
 ];
