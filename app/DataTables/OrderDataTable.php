@@ -18,6 +18,16 @@ class OrderDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
+        $dataTable->editColumn('is_pickup', function($order)
+        {
+            $result = 'Verzenden';
+
+           if(true == $order->is_pickup) {
+               $result = 'Afhalen';
+           }
+           return $result;
+        });
+
         $dataTable->editColumn('company_id', function($order)
         {
             return $order->company->name;
@@ -25,6 +35,10 @@ class OrderDataTable extends DataTable
 
         $dataTable->editColumn('street', function($order)
         {
+            if(true == $order->is_pickup) {
+                return '-';
+            }
+
             $address = $order->street . ' '. $order->housenumber;
             if($order->housenumber_addition) {
                 $address .= $order->housenumber_addition;
@@ -88,6 +102,7 @@ class OrderDataTable extends DataTable
         return [
             ['data' => 'company_id', 'name' => 'company_id', 'title' => 'Bedrijf'],
             ['data' => 'number', 'name' => 'number', 'title' => 'Bestelnummer'],
+            ['data' => 'is_pickup', 'name' => 'is_pickup', 'title' => 'Verzendmethode'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Datum'],
             ['data' => 'first_name', 'name' => 'first_name', 'title' => 'Voornaam'],
             ['data' => 'last_name', 'name' => 'last_name', 'title' => 'Achternaam'],
