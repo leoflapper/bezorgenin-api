@@ -80,7 +80,11 @@ class OrderRepository extends BaseRepository
         }
 
         $order->subtotal = $subtotal;
-        $order->shipping_price = $company->delivery_costs;
+
+        $order->shipping_price = 0;
+        if(false == $order->is_pickup) {
+            $order->shipping_price = $company->delivery_costs;
+        }
         $order->tax = 0;
         $order->total_price = $order->subtotal + $order->shipping_price + $order->tax;
 
