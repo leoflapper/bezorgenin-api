@@ -122,7 +122,7 @@ class MealController extends AppBaseController
 
         Flash::success('Meal updated successfully.');
 
-        return redirect(route('meals.index'));
+        return view('meals.edit')->with('meal', $meal);
     }
 
     /**

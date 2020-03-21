@@ -57,6 +57,8 @@ class CompanyController extends AppBaseController
     {
         $input = $request->all();
 
+        $input = $this->setBooleans($input);
+
         $company = $this->companyRepository->create($input);
 
         Flash::success('Company saved successfully.');
@@ -121,11 +123,15 @@ class CompanyController extends AppBaseController
 
             return redirect(route('companies.index'));
         }
-        $company = $this->companyRepository->update($request->all(), $id);
+        $input = $request->all();
+
+        $input = $this->setBooleans($input);
+
+        $company = $this->companyRepository->update($input, $id);
 
         Flash::success('Company updated successfully.');
 
-        return redirect(route('companies.index'));
+        return view('companies.edit')->with('company', $company);
     }
 
     /**
@@ -150,5 +156,25 @@ class CompanyController extends AppBaseController
         Flash::success('Company deleted successfully.');
 
         return redirect(route('companies.index'));
+    }
+
+    /**
+     * @param $input
+     * @return mixed
+     */
+    private function setBooleans($input)
+    {
+        $booleans = [
+            'has_shipping',
+            'has_pickup'
+        ];
+
+        foreach ($booleans as $boolean) {
+            if(!isset($input[$boolean])) {
+                $input[$boolean] = false;
+            }
+        }
+
+        return $input;
     }
 }

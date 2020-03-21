@@ -102,13 +102,13 @@
 <!-- Vat Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('has_shipping', 'Mogelijkheid tot leveren:') !!}
-    {!! Form::checkbox('has_shipping',  $company->has_shipping, ['class' => 'form-control']) !!}
+    {!! Form::checkbox('has_shipping', true, $company->has_shipping) !!}
 </div>
 
 <!-- Vat Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('has_pickup', 'Mogelijkheid tot afhalen:') !!}
-    {!! Form::checkbox('has_pickup', $company->has_pickup, ['class' => 'form-control']) !!}
+    {!! Form::checkbox('has_pickup', true, $company->has_pickup) !!}
 </div>
 
 
