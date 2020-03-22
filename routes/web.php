@@ -17,6 +17,8 @@ Auth::routes();
 
 Auth::routes(['verify' => true]);
 
+Route::redirect('/', '/login')->name('start');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['verified']], function () {
