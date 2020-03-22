@@ -18,6 +18,19 @@ class UserDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
+        $dataTable->editColumn('password', function($user)
+        {
+            $result = '';
+            foreach($user->companies as $company) {
+                if(!$result) {
+                    $result .= $company->name;
+                } else {
+                    $result .= ', '.$company->name;
+                }
+            }
+            return $result;
+        });
+
         return $dataTable->addColumn('action', 'users.datatables_actions');
     }
 
@@ -65,9 +78,10 @@ class UserDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'name',
-            'email',
-            'email_verified_at',
+            ['data' => 'name', 'name' => 'name', 'title' => 'Naam'],
+            ['data' => 'email', 'name' => 'email', 'title' => 'E-mailadres'],
+            ['data' => 'password', 'name' => 'password', 'title' => 'Bedrijven'],
+            ['data' => 'email_verified_at', 'name' => 'email_verified_at', 'title' => 'E-mail geverifieerd op'],
         ];
     }
 

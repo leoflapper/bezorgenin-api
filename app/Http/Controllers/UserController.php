@@ -29,6 +29,9 @@ class UserController extends AppBaseController
      */
     public function index(UserDataTable $userDataTable)
     {
+        if(!auth()->user()->hasRole('admin')) {
+           return redirect(route('users.edit', auth()->user()->id));
+        }
         return $userDataTable->render('users.index');
     }
 
@@ -39,7 +42,7 @@ class UserController extends AppBaseController
      */
     public function create()
     {
-        return view('users.create');
+        return redirect(route('register'));
     }
 
     /**
@@ -69,15 +72,7 @@ class UserController extends AppBaseController
      */
     public function show($id)
     {
-        $user = $this->userRepository->find($id);
-
-        if (empty($user)) {
-            Flash::error('User not found');
-
-            return redirect(route('users.index'));
-        }
-
-        return view('users.show')->with('user', $user);
+        return redirect(route('users.edit', $id));
     }
 
     /**

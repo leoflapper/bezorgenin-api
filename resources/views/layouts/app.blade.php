@@ -70,12 +70,12 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="{{route('users.show', auth()->user()->id)}}" class="btn btn-default btn-flat">Profiel</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="{{ url('/logout') }}" class="btn btn-default btn-flat"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            Sign out
+                                            Uitloggen
                                         </a>
                                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                             @csrf

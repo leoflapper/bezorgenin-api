@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            User
+            Profiel
         </h1>
    </section>
    <div class="content">
@@ -16,6 +16,18 @@
                         @include('users.fields')
 
                    {!! Form::close() !!}
+
+                   <div class="form-group col-sm-6">
+
+                       {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
+                       {!! Form::button('<i class="glyphicon glyphicon-trash"></i> Verwijder account', [
+                            'type' => 'submit',
+                            'class' => 'btn btn-danger',
+                            'onclick' => "return confirm('Weet je het zeker?')"
+                        ]) !!}
+                       {!! Form::close() !!}
+                   </div>
+
                </div>
            </div>
        </div>

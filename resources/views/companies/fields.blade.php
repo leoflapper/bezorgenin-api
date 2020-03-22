@@ -19,39 +19,39 @@
 <hr style="width: 100%; " />
 <!-- First Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('first_name', 'First Name:') !!}
+    {!! Form::label('first_name', 'Voornaam:') !!}
     {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Last Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('last_name', 'Last Name:') !!}
+    {!! Form::label('last_name', 'Achternaam:') !!}
     {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group col-sm-6">
     {!! Form::label('address.street', 'Straat:') !!}
-    {!! Form::text('address.street', $company->address->street, ['class' => 'form-control']) !!}
+    {!! Form::text('address.street',  $company->address->street ?? '', ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group col-sm-6">
     {!! Form::label('address.housenumber', 'Huisnummer:') !!}
-    {!! Form::text('address.housenumber', $company->address->housenumber, ['class' => 'form-control']) !!}
+    {!! Form::text('address.housenumber',  $company->address->housenumber ?? '', ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group col-sm-6">
     {!! Form::label('address.housenumber_addition', 'Huisnummer toevoeging:') !!}
-    {!! Form::text('address.housenumber_addition', $company->address->housenumber_addition, ['class' => 'form-control']) !!}
+    {!! Form::text('address.housenumber_addition',  $company->address->housenumber_addition ?? '', ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group col-sm-6">
     {!! Form::label('address.postcode', 'Postcode:') !!}
-    {!! Form::text('address.postcode', $company->address->postcode, ['class' => 'form-control']) !!}
+    {!! Form::text('address.postcode',  $company->address->postcode ?? '', ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group col-sm-6">
     {!! Form::label('address.city', 'Stad:') !!}
-    {!! Form::text('address.city', $company->address->city, ['class' => 'form-control']) !!}
+    {!! Form::text('address.city',  $company->address->city ?? '', ['class' => 'form-control']) !!}
 </div>
 
 <!-- Delivery Costs Field -->
@@ -116,13 +116,13 @@
 <!-- Vat Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('has_shipping', 'Mogelijkheid tot bezorgen:') !!}
-    {!! Form::checkbox('has_shipping', true, $company->has_shipping) !!}
+    {!! Form::checkbox('has_shipping', true,  $company->has_shipping ?? '') !!}
 </div>
 
 <!-- Vat Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('has_pickup', 'Mogelijkheid tot afhalen:') !!}
-    {!! Form::checkbox('has_pickup', true, $company->has_pickup) !!}
+    {!! Form::checkbox('has_pickup', true, $company->has_pickup ?? '') !!}
 </div>
 
 
@@ -134,6 +134,6 @@
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+    {!! Form::submit('Opslaan', ['class' => 'btn btn-primary']) !!}
     <a href="{{ route('companies.index') }}" class="btn btn-default">Cancel</a>
 </div>

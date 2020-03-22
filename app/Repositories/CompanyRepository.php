@@ -30,13 +30,28 @@ class CompanyRepository extends BaseRepository
         'vat_id'
     ];
 
-
     public function find($id, $columns = ['*'])
     {
-        if(!$result = parent::find($id, $columns)) {
-            $result = $this->model->newQuery()->where('slug', $id)->first($columns);
+        if(!$company = parent::find($id, $columns)) {
+            $company = $this->model->newQuery()->where('slug', $id)->first($columns);
         }
-        return $result;
+
+        if(!auth()->user()->hasRole('admin')) {
+            if(!$this->authUserHasCompany($company->id)) {
+                return null;
+            }
+        }
+
+        return $company;
+    }
+
+    /**
+     * @param int $companyId
+     * @return bool
+     */
+    private function authUserHasCompany(int $companyId): bool
+    {
+        return (bool)auth()->user()->companies()->where('id', $companyId)->first();
     }
 
     /**
@@ -70,5 +85,22 @@ class CompanyRepository extends BaseRepository
         }
 
         return $model;
+    }
+
+    public function delete($id)
+    {
+        if(!auth()->user()->hasRole('admin')) {
+            if(!$this->authUserHasCompany($id)) {
+                return null;
+            }
+        }
+
+        $company = $this->find($id);
+        if(parent::delete($id)) {
+            $company->meals()->delete();
+            $company->address()->delete();
+        }
+
+        return true;
     }
 }

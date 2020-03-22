@@ -34,4 +34,4 @@ Route::resource('orders', 'OrderAPIController', [ 'only' => ['store']]);
 //Route::resource('order_products', 'OrderProductAPIController');
 
 
-Route::resource('users', 'UserAPIController');
+//Route::resource('users', 'UserAPIController');

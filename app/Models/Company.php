@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Repositories\MealCategoryRepository;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
@@ -30,6 +31,7 @@ use Illuminate\Support\Collection;
 class Company extends Model
 {
     use SoftDeletes;
+    use Sluggable;
 
     public $table = 'companies';
 
@@ -135,6 +137,20 @@ class Company extends Model
     public function users()
     {
         return $this->hasOne(\App\User::class, 'id', 'user_id');
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
     }
 
     public function toArrayWithRelationships()
