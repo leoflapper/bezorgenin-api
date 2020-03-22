@@ -24,7 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // Make sure the queue is/keeps running
+        $schedule->command('queue:work --queue=tables --tries=3')
+            ->everyMinute()
+            ->withoutOverlapping();
     }
 
     /**

@@ -33,6 +33,9 @@ class NewOrderCustomer extends Mailable
     {
         return $this
             ->from(config('order.mail.from.email'), config('order.mail.from.name'))
+            ->to($this->order->email, $this->order->first_name . ' ' . $this->order->last_name)
+            ->subject(sprintf('Bedankt voor je bestelling bij %s!', $this->order->company->name))
+            ->replyTo($this->order->company->email, $this->order->company->name)
             ->view('emails.orders.customer-new');
     }
 }

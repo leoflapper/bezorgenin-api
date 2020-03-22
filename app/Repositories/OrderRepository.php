@@ -94,7 +94,7 @@ class OrderRepository extends BaseRepository
 
         $order->orderProducts()->createMany($orderProducts);
 
-        //event(new OrderCreated($order));
+        event(new OrderCreated($order));
 
         return $order;
     }

@@ -5,7 +5,7 @@ return [
     'mail' => [
         'from' => [
             'name' => 'Friesland Bezorgt',
-            'email' => 'info@frieslandbezorgd.nl'
+            'email' => 'info@frieslandbezorgt.nl'
         ],
         'reply_to' => [
             'name' => 'Friesland Bezorgt',
