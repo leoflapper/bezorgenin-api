@@ -59,6 +59,9 @@
 
                                                         @endphp
                                                         [{{$shippingMethod}}] Nieuwe {{$shippingMethod}}bestelling van {{ $order->first_name }} {{ $order->last_name }}!
+                                                        @if($order->delivery_time)
+                                                            <br />Bezorgtijd: {{$order->delivery_time_string}}
+                                                        @endif
                                                     </strong>
                                                 </td>
                                             </tr>
@@ -74,6 +77,12 @@
                                                     @endif
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td align="center" style="font-size: 14px; line-height: 30px; font-family: 'Roboto Slab', 'Open Sans', Helvetica, Arial, sans-serif;">
+                                                    <a href="{{ $order->getWhatsAppClickAndChat() }}">Klik hier om {{ $order->first_name }} {{ $order->last_name }} een bericht te sturen via WhatsApp.</a>
+                                                </td>
+                                            </tr>
+
                                         </table>
                                     </td>
                                 </tr>
@@ -229,6 +238,21 @@
                                                         <tr>
                                                             <td height="25">&nbsp;</td>
                                                         </tr>
+
+                                                        @if($order->delivery_time)
+                                                            <tr>
+                                                                <td align="left" height="25" valign="middle">
+                                                                    <strong>Bezorgtijd</strong>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left" height="25">{{ $order->delivery_time_string }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td height="25">&nbsp;</td>
+                                                            </tr>
+                                                        @endif
                                                     </table>
                                                 </td>
                                             </tr>

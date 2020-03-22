@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Site;
+use App\Util\WhatsApp;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,10 +25,7 @@ class Order extends Model
 
     public $table = 'orders';
 
-
     protected $dates = ['deleted_at'];
-
-
 
     public $fillable = [
         'first_name',
@@ -42,6 +40,7 @@ class Order extends Model
         'country_id',
         'email',
         'telephone',
+        'delivery_time',
         'note',
     ];
 
@@ -77,6 +76,7 @@ class Order extends Model
         'email' => 'required|email',
         'telephone' => 'required',
         'note' => '',
+        'delivery_time' => '',
 	    'meals' => 'required'
     ];
 
@@ -112,6 +112,44 @@ class Order extends Model
     public function getSiteAttribute()
     {
         return new Site($this->website);
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getDeliveryTimeStringAttribute()
+    {
+        if($this->delivery_time === 'szm') {
+            return 'Zo snel mogelijk';
+        }
+
+        try {
+            $dateTime = new \DateTime($this->delivery_time);
+            return $dateTime->format('H:i');
+        } catch (\Exception $e) {}
+
+        return $this->delivery_time;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWhatsAppClickAndChat(): string
+    {
+        $text = '';
+        if($this->delivery_time_string && $this->delivery_time !== 'szm') {
+            $text = 'Beste %s %s, je bestelling ';
+            if(true === $this->is_pickup) {
+                $text .= 'staat om %s voor je klaar.';
+            } else {
+                $text .= 'wordt om %s bezorgt.';
+            }
+            $text .= ' Groet, team %s';
+
+            $text = sprintf($text, $this->first_name, $this->last_name, $this->delivery_time_string, $this->company->name);
+        }
+
+        return WhatsApp::getClickAndChatUrl($this->telephone, $text);
     }
 
     /**

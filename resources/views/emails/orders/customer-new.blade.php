@@ -211,6 +211,20 @@ $primaryColor = $site->getColor('primary-color', '#2f3640');
                                                             </tr>
 
                                                         @endif
+                                                        @if($order->delivery_time)
+                                                            <tr>
+                                                                <td align="left" height="25" valign="middle">
+                                                                    <strong>Bezorgtijd</strong>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left" height="25">{{ $order->delivery_time_string }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td height="25">&nbsp;</td>
+                                                            </tr>
+                                                        @endif
                                                         @if($order->note)
                                                             <tr>
                                                                 <td align="left"><strong>Notitie</strong>: {{ $order->note }}</td>

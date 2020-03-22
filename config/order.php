@@ -11,5 +11,5 @@ return [
             'name' => 'Friesland Bezorgt',
             'email' => 'no-reply@frieslandbezorgd.nl'
         ]
-    ]
+    ],
 ];
