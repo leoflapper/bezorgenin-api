@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Make sure the queue is/keeps running
-        $schedule->command('queue:work --queue=tables --tries=3')
+        $schedule->command('queue:work --queue=default --tries=3')
             ->everyMinute()
             ->withoutOverlapping();
     }
