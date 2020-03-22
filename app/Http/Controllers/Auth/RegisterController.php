@@ -39,7 +39,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['verified', 'role:admin']);
+        //$this->middleware(['verified']);
     }
 
     /**
