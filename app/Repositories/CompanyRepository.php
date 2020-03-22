@@ -68,6 +68,12 @@ class CompanyRepository extends BaseRepository
 
     public function update($input, $id)
     {
+        if(!auth()->user()->hasRole('admin')) {
+            if(!$this->authUserHasCompany($id)) {
+                return null;
+            }
+        }
+
         /**
          * @var $model Company
          */
