@@ -30,6 +30,15 @@ class CompanyRepository extends BaseRepository
         'vat_id'
     ];
 
+    public function find($id, $columns = ['*'])
+    {
+        if(!$company = parent::find($id, $columns)) {
+            $company = $this->model->newQuery()->where('slug', $id)->first($columns);
+        }
+
+        return $company;
+    }
+
     /**
      * @param int $companyId
      * @return bool
@@ -59,12 +68,6 @@ class CompanyRepository extends BaseRepository
 
     public function update($input, $id)
     {
-        if(!auth()->user()->hasRole('admin')) {
-            if(!$this->authUserHasCompany($id)) {
-                return null;
-            }
-        }
-
         /**
          * @var $model Company
          */
