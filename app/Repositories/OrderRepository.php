@@ -6,6 +6,7 @@ use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Repositories\BaseRepository;
 use App\Site;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -133,5 +134,22 @@ class OrderRepository extends BaseRepository
     private function authUserHasCompany(int $companyId): bool
     {
         return (bool)auth()->user()->companies()->where('id', $companyId)->first();
+    }
+
+    /**
+     * @return Builder
+     * @throws \Exception
+     */
+    public function getCurrentUserOrders()
+    {
+        return $this->makeModel()->newQuery()->whereHas('company', function (Builder $query) {
+
+            $ids = [];
+            foreach (auth()->user()->companies as $company) {
+                $ids[] = $company->id;
+            }
+            $query->whereIn('id', $ids);
+
+        });;
     }
 }

@@ -1,6 +1,6 @@
 <!-- Meal Category Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('meal_category_id', 'Categorie:') !!}
+    {!! Form::label('meal_category_id', 'Productcategorie:') !!}
 
     {!! Form::select('meal_category_id', \App\Models\MealCategory::get()->pluck('name', 'id'), null, [
         'class' => 'form-control',

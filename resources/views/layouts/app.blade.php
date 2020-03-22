@@ -92,7 +92,7 @@
 
         <!-- Main Footer -->
         <footer class="main-footer" style="max-height: 100px;text-align: center">
-            <strong>Copyright © {{ date('Y') }} <a href="#">Leo Flapper</a>.</strong> All rights reserved.
+            <strong>Copyright © {{ date('Y') }} <a href="https://www.linkedin.com/in/leoflapper/" target="blank">Leo Flapper</a>.</strong>
         </footer>
 
     </div>

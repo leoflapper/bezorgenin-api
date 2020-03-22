@@ -99,6 +99,7 @@
 <!-- Updated At Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('', 'Categorieën:') !!}
+    <p>Dit kunnen de keukens zijn die jullie serveren, of bepaalde type producten. Mocht er een categorie ontbreken, <a href="{{ route('kitchens.create') }}" target="_blank">klik dan hier om een categorie toe te voegen,</a></p>
 
     @php $currentKitchens = []; @endphp
     @if(isset($company))

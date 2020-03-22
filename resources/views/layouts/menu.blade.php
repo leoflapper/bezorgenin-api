@@ -1,4 +1,8 @@
 
+<li class="{{ Request::is('home') ? 'active' : '' }}">
+    <a href="{{ route('home') }}"><i class="fa fa-edit"></i><span>Dashboard</span></a>
+</li>
+
 <li class="{{ Request::is('companies*') ? 'active' : '' }}">
     <a href="{{ route('companies.index') }}"><i class="fa fa-edit"></i><span>Bedrijven</span></a>
 </li>
@@ -26,12 +30,12 @@
 
 
 @role('admin')
-<li class="{{ Request::is('users*') ? 'active' : '' }}">
+<li class="{{ Request::is('users.index') ? 'active' : '' }}">
     <a href="{{ route('users.index') }}"><i class="fa fa-edit"></i><span>Gebruikers</span></a>
 </li>
 @endrole
 
 
-<li class="{{ Request::is('users*') ? 'active' : '' }}">
+<li class="{{ Request::is('users.edit') ? 'active' : '' }}">
     <a href="{{ route('users.edit', 1) }}"><i class="fa fa-edit"></i><span>Profiel</span></a>
 </li>
