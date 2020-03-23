@@ -13,7 +13,7 @@
 @endrole
 
 <li class="{{ Request::is('kitchens*') ? 'active' : '' }}">
-    <a href="{{ route('kitchens.index') }}"><i class="fa fa-edit"></i><span>Categorieën</span></a>
+    <a href="{{ route('kitchens.index') }}"><i class="fa fa-edit"></i><span>Bedrijfcategorieën</span></a>
 </li>
 
 <li class="{{ Request::is('meals*') ? 'active' : '' }}">
