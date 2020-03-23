@@ -8,6 +8,8 @@
    </section>
    <div class="content">
        @include('adminlte-templates::common.errors')
+       <p>Vul zoveel mogelijk gegevens bij bedrijfsinformatie. Zo zorg je ervoor dat bestellingen goed gaan, er geen vragen ontstaan en je profiel zo volledig mogelijk is ingevuld.  </p>
+
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">

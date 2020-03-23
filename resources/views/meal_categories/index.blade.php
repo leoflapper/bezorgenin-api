@@ -9,6 +9,7 @@
     </section>
     <div class="content">
         <div class="clearfix"></div>
+        <p>Hieronder worden alle mogelijke productcategorieën waar je producten onder vallen weergeven. Heb je een restaurant dan kies je waarschijnlijk voor Voorgerecht, Hoofdgerecht of Nagerecht. Heb je een winkel? Dan kan dit bijvoorbeeld Cadeaus, Etenswaar of Bloemen zijn. Mocht je productcategorie er niet tussen staan, dan kun je die ook <a href="{{route('mealCategories.create')}}">toevoegen</a>. </p>
 
         @include('flash::message')
 

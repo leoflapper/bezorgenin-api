@@ -9,7 +9,7 @@
     </section>
     <div class="content">
         <div class="clearfix"></div>
-
+        <p>Je bestellingen komen per e-mail binnen op het e-mailadres dat je bij <a href="{{route('companies.index')}}">Bedrijven</a> hebt ingevuld. <br> De betalingen kun je zelf regelen via Tikkie of een betaalverzoek. Op de bestelbevestiging in je e-mailbox komt een link om direct een WhatsAppbericht naar de klant te sturen.</p>
         @include('flash::message')
 
         <div class="clearfix"></div>

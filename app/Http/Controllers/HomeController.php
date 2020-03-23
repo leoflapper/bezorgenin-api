@@ -37,23 +37,34 @@ class HomeController extends Controller
     {
         $actions = [];
 
-        if(auth()->user()->companies()->first() && auth()->user()->companies()->first()->address->street === '') {
-            $actions[] = [
-                'title' => 'Vul de gegevens in van je restaurant/bedrijf',
-                'description' => 'Om bestellingen mogelijk te maken zijn de gegevens van je bedrijf nodig.',
-                'link' => route('companies.edit',  auth()->user()->companies()->first()->id),
-                'link_text' => 'Klik hier om in te vullen'
-            ];
-        }
 
-        if(auth()->user()->companies()->first() && auth()->user()->companies()->first()->meals()->count() === 0) {
-            $actions[] = [
-                'title' => 'Voeg je eerste maaltijd of product toe',
-                'description' => 'Door producten of maaltijden toe te voegen kunnen mensen deze bestellen.',
-                'link' => route('meals.create'),
-                'link_text' => 'Klik hier om toe te voegen'
-            ];
-        }
+        $actions[] = [
+            'done' => auth()->user()->companies()->first() && (string)auth()->user()->companies()->first()->address->street === '' ? false : true,
+            'title' => 'Bedrijfsinformatie aanvullen ',
+            'description' => 'Vul zoveel mogelijk gegevens bij bedrijfsinformatie. Zo zorg je ervoor dat bestellingen goed gaan, er geen vragen ontstaan en je profiel zo volledig mogelijk is ingevuld. ',
+            'link' => route('companies.edit',  auth()->user()->companies()->first()->id),
+            'link_text' => 'Klik hier om je bedrijfsinformatie aan te vullen'
+        ];
+
+
+        $actions[] = [
+            'done' => true,
+            'type' => '',
+            'title' => 'Productcategorieën toevoegen',
+            'description' => 'Bij deze stap vul je in onder welke productcategorieën je producten vallen, er zijn al een aantal toegevoegd. Heb je een restaurant dan kies je waarschijnlijk voor Voorgerecht, Hoofdgerecht of Nagerecht. Heb je een winkel? Dan kan dit bijvoorbeeld Cadeaus, Etenswaar of Bloemen zijn.',
+            'link' => route('mealCategories.index'),
+            'link_text' => 'Bekijk de productcategorieën'
+        ];
+
+
+        $actions[] = [
+            'done' => auth()->user()->companies()->first() && auth()->user()->companies()->first()->meals()->count() === 0 ? false : true,
+            'title' => 'Producten toevoegen',
+            'description' => 'Voeg bij deze stap je producten in. Het is mogelijk om een titel, beschrijving, prijs en extra informatie mee te geven. De toegevoegde producten zijn direct zichtbaar op je bedrijfspagina.',
+            'link' => route('meals.create'),
+            'link_text' => 'Klik hier om toe te voegen'
+        ];
+
 
         return $actions;
     }

@@ -10,6 +10,8 @@
     <div class="content">
         <div class="clearfix"></div>
 
+        <p>Voeg bij deze stap je producten toe. Het is mogelijk om een titel, beschrijving, prijs en extra informatie mee te geven. De toegevoegde producten zijn direct zichtbaar op je bedrijfspagina. </p>
+
         @include('flash::message')
 
         <div class="clearfix"></div>
