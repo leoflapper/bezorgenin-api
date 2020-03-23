@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 
 Route::resource('companies', 'CompanyAPIController', [ 'only' => ['index', 'show']]);
@@ -28,7 +28,7 @@ Route::resource('kitchens', 'KitchenAPIController', [ 'only' => ['index', 'show'
 //Route::resource('meals', 'MealAPIController');
 
 
-Route::resource('orders', 'OrderAPIController', [ 'only' => ['store']]);
+//Route::resource('orders', 'OrderAPIController', [ 'only' => ['store']]);
 
 
 //Route::resource('order_products', 'OrderProductAPIController');
