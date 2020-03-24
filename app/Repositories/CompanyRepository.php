@@ -51,7 +51,6 @@ class CompanyRepository extends BaseRepository
 
             }
         }
-        $query->whereHas('meals');
 
         return $query->get($columns);
     }
