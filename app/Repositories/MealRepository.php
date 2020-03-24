@@ -103,7 +103,7 @@ class MealRepository extends BaseRepository
     private function formatPricesForDb($input)
     {
         if(isset($input['price'])) {
-            $input['price'] = str_replace(',', '.', $input['price']);
+            $input['price'] = (float)str_replace(',', '.', $input['price']);
         }
         return $input;
     }
