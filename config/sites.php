@@ -11,7 +11,8 @@ return [
             'primary-color' => '#2f3640'
         ],
         'cities' => [
-            'Sneek'
+            'sneek', 'ijlst', 'ysbrechtum', 'ijsbrechtum', 'drylst', 'snits', 'offingawier', 'scharnegoutum',
+            'Sneek', 'Ijlst', 'Ysbrechtum', 'Ijsbrechtum', 'Drylst', 'Snits', 'Offingawier', 'Scharnegoutum'
         ],
     ],
     'frieslandbezorgt' => [
@@ -22,7 +23,7 @@ return [
             'primary-color' => '#2f3640'
         ],
         'cities' => [
-            'Sneek'
+            '*'
         ],
     ],
     'cors' => [

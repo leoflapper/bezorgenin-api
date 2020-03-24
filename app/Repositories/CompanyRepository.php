@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Company;
 use App\Models\Kitchen;
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class CompanyRepository
@@ -29,6 +30,31 @@ class CompanyRepository extends BaseRepository
         'kvk',
         'vat_id'
     ];
+
+    /**
+     * @param string $appDomain
+     * @param array $search
+     * @param null $skip
+     * @param null $limit
+     * @param array $columns
+     * @return Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getByAppDomain(string $appDomain = '', $search = [], $skip = null, $limit = null, $columns = ['*'])
+    {
+        $query = $this->allQuery($search, $skip, $limit);
+
+        if($siteConfig = config('sites.'.$appDomain)) {
+            if(isset($siteConfig['cities']) && $siteConfig['cities'] !== '*') {
+                $query->whereHas('address', function (Builder $query) use ($siteConfig) {
+                    $query->whereIn('city', $siteConfig['cities']);
+                });
+
+            }
+        }
+        $query->whereHas('meals');
+
+        return $query->get($columns);
+    }
 
     public function find($id, $columns = ['*'])
     {
@@ -112,7 +138,11 @@ class CompanyRepository extends BaseRepository
         return true;
     }
 
-    private function formatInputFields($input)
+    /**
+     * @param array $input
+     * @return array
+     */
+    private function formatInputFields(array $input): array
     {
         if(isset($input['delivery_costs'])) {
             $input['delivery_costs'] = (float)str_replace(',', '.', $input['delivery_costs']);

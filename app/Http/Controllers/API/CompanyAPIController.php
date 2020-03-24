@@ -34,8 +34,9 @@ class CompanyAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $companies = $this->companyRepository->all(
-            $request->except(['skip', 'limit']),
+        $companies = $this->companyRepository->getByAppDomain(
+            $request->header('AppDomain', ''),
+            [],
             $request->get('skip'),
             $request->get('limit')
         );
