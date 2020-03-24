@@ -68,7 +68,7 @@ class CompanyRepository extends BaseRepository
 
     public function create($input)
     {
-        $input = $this->formatPricesForDb($input);
+        $input = $this->formatInputFields($input);
         return parent::create($input);
     }
 
@@ -80,7 +80,7 @@ class CompanyRepository extends BaseRepository
             }
         }
 
-        $input = $this->formatPricesForDb($input);
+        $input = $this->formatInputFields($input);
 
         /**
          * @var $model Company
@@ -112,7 +112,7 @@ class CompanyRepository extends BaseRepository
         return true;
     }
 
-    private function formatPricesForDb($input)
+    private function formatInputFields($input)
     {
         if(isset($input['delivery_costs'])) {
             $input['delivery_costs'] = (float)str_replace(',', '.', $input['delivery_costs']);
@@ -121,6 +121,11 @@ class CompanyRepository extends BaseRepository
         if(isset($input['min_order_amount'])) {
             $input['min_order_amount'] = (float)str_replace(',', '.', $input['min_order_amount']);
         }
+
+        if(isset($input['image_url'])) {
+            $input['image_url'] = str_replace('http', 'https', $input['image_url']);
+        }
+
         return $input;
     }
 }
