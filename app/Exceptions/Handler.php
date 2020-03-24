@@ -2,7 +2,11 @@
 
 namespace App\Exceptions;
 
+use Mail;
+use App\Mail\ExceptionOccured;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,7 +40,25 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        if($this->shouldReport($exception)) {
+            $this->sendEmail($exception);
+        }
         parent::report($exception);
+    }
+
+    /**
+     * Sends an email to the developer about the exception.
+     *
+     * @param  \Exception  $exception
+     * @return void
+     */
+    public function sendEmail(Throwable $exception)
+    {
+        try {
+            Mail::to(config('exception.email_address'))->send(new ExceptionOccured($exception->getTraceAsString()));
+        } catch (\Exception $ex) {
+            dd($ex);
+        }
     }
 
     /**
