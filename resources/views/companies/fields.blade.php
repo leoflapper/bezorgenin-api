@@ -14,6 +14,7 @@
 <!-- Name Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('image_url', 'Restaurant afbeelding URL:') !!}
+    <p>Dit kan een URL zijn van je eigen website. Een beveiligde URL (met HTTPS) is wel verplicht.</p>
     {!! Form::text('image_url', null, ['class' => 'form-control']) !!}
 </div>
 <hr style="width: 100%; " />
