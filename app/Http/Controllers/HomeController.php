@@ -38,13 +38,15 @@ class HomeController extends Controller
         $actions = [];
 
 
-        $actions[] = [
-            'done' => auth()->user()->companies()->first() && (string)auth()->user()->companies()->first()->address->street === '' ? false : true,
-            'title' => 'Bedrijfsinformatie aanvullen ',
-            'description' => 'Vul zoveel mogelijk gegevens bij bedrijfsinformatie. Zo zorg je ervoor dat bestellingen goed gaan, er geen vragen ontstaan en je profiel zo volledig mogelijk is ingevuld. ',
-            'link' => route('companies.edit',  auth()->user()->companies()->first()->id),
-            'link_text' => 'Klik hier om je bedrijfsinformatie aan te vullen'
-        ];
+        if(auth()->user()->companies()->first()) {
+            $actions[] = [
+                'done' => auth()->user()->companies()->first() && (string)auth()->user()->companies()->first()->address->street === '' ? false : true,
+                'title' => 'Bedrijfsinformatie aanvullen ',
+                'description' => 'Vul zoveel mogelijk gegevens bij bedrijfsinformatie. Zo zorg je ervoor dat bestellingen goed gaan, er geen vragen ontstaan en je profiel zo volledig mogelijk is ingevuld. ',
+                'link' => route('companies.edit',  auth()->user()->companies()->first()->id),
+                'link_text' => 'Klik hier om je bedrijfsinformatie aan te vullen'
+            ];
+        }
 
 
         $actions[] = [
@@ -57,13 +59,16 @@ class HomeController extends Controller
         ];
 
 
-        $actions[] = [
-            'done' => auth()->user()->companies()->first() && auth()->user()->companies()->first()->meals()->count() === 0 ? false : true,
-            'title' => 'Producten toevoegen',
-            'description' => 'Voeg bij deze stap je producten in. Het is mogelijk om een titel, beschrijving, prijs en extra informatie mee te geven. De toegevoegde producten zijn direct zichtbaar op je bedrijfspagina.',
-            'link' => route('meals.create'),
-            'link_text' => 'Klik hier om toe te voegen'
-        ];
+        if(auth()->user()->companies()->first()) {
+            $actions[] = [
+                'done' => auth()->user()->companies()->first() && auth()->user()->companies()->first()->meals()->count() === 0 ? false : true,
+                'title' => 'Producten toevoegen',
+                'description' => 'Voeg bij deze stap je producten in. Het is mogelijk om een titel, beschrijving, prijs en extra informatie mee te geven. De toegevoegde producten zijn direct zichtbaar op je bedrijfspagina.',
+                'link' => route('meals.create'),
+                'link_text' => 'Klik hier om toe te voegen'
+            ];
+        }
+
 
 
         return $actions;
