@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Auth::routes(['verify' => true]);
+//Auth::routes(['verify' => true]);
 
 Route::redirect('/', '/login')->name('start');
 
