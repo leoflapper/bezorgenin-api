@@ -74,6 +74,14 @@ class CompanyRepository extends BaseRepository
             }
         }
 
+        if(isset($input['delivery_costs'])) {
+            $input['delivery_costs'] = str_replace(',', '.', $input['delivery_costs']);
+        }
+
+        if(isset($input['min_order_amount'])) {
+            $input['min_order_amount'] = str_replace(',', '.', $input['min_order_amount']);
+        }
+
         /**
          * @var $model Company
          */

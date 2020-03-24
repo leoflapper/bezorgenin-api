@@ -88,7 +88,7 @@ class Company extends Model
     public static $rules = [
         'name' => 'required',
         'slug' => 'required',
-        'image_url' => 'required',
+        'image_url' => '',
         'first_name' => 'required',
         'last_name' => 'required',
         'delivery_costs' => 'required',
