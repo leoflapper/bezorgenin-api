@@ -48,6 +48,7 @@ class KitchenDataTable extends DataTable
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
                 'buttons'   => $this->getButtons(),
+                'responsive' => true
             ]);
     }
 

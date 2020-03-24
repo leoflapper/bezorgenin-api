@@ -55,7 +55,8 @@ class CompanyDataTable extends DataTable
                 'dom'       => 'Bfrtip',
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
-                'buttons'   => $this->getButtons()
+                'buttons'   => $this->getButtons(),
+                'responsive' => true
             ]);
     }
 

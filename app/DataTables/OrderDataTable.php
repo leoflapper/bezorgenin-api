@@ -94,6 +94,7 @@ class OrderDataTable extends DataTable
             ->parameters([
                 'dom'       => 'Bfrtip',
                 'stateSave' => true,
+                'responsive' => true,
                 'order'     => [[2, 'desc']],
                 'buttons'   => $this->getButtons()
             ]);
@@ -124,7 +125,7 @@ class OrderDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['data' => 'company_id', 'name' => 'company_id', 'title' => 'Bedrijf'],
+           // ['data' => 'company_id', 'name' => 'company_id', 'title' => 'Bedrijf'],
             ['data' => 'number', 'name' => 'number', 'title' => 'Bestelnummer'],
             ['data' => 'is_pickup', 'name' => 'is_pickup', 'title' => 'Verzendmethode'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Datum'],
