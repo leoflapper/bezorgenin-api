@@ -54,6 +54,17 @@
                 @endif
             </div>
 
+            <div class="form-group has-feedback{{ $errors->has('company_name') ? ' has-error' : '' }}">
+                <input type="text" class="form-control" name="company_name" placeholder="Bedrijfsnaam">
+                <span class="glyphicon glyphicon-company form-control-feedback"></span>
+
+                @if ($errors->has('company_name'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('company_name') }}</strong>
+                    </span>
+                @endif
+            </div>
+
             <div class="form-group has-feedback{{ $errors->has('email') ? ' has-error' : '' }}">
                 <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mailadres">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

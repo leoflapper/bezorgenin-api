@@ -4,8 +4,8 @@ return [
     'sneekbezorgt' => [
         'name' => 'Sneek Bezorgt',
         'url' => 'https://sneekbezorgt.nl',
-        'privacy_url' => 'https://sneekbezort.nl/privacy',
-        'terms' => 'https://sneekbezort.nl/algemene-voorwaarden',
+        'privacy_url' => 'https://sneekbezorgt.nl/privacy',
+        'terms' => 'https://sneekbezorgt.nl/privacy',
         'colors' => [
             'background-color' => '#f1f2f6',
             'primary-color' => '#2f3640'

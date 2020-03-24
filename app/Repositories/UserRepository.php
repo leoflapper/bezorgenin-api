@@ -91,7 +91,7 @@ class UserRepository extends BaseRepository
      * @param User $user
      * @return User
      */
-    public function initUser(User $user)
+    public function initUser(User $user, array $data = [])
     {
         $user->assignRole('company');
 
@@ -99,7 +99,11 @@ class UserRepository extends BaseRepository
         $address->save();
 
         $company = new Company();
-        $company->name = $user->name . ' Restaurant';
+
+        $company->name = $user->name . ' Bedrijf';
+        if(isset($data['company_name']) && $data['company_name']) {
+            $company->name = $data['company_name'];
+        }
         $company->address_id = $address->id;
         $company->email = $user->email;
         $company->user_id = $user->id;
