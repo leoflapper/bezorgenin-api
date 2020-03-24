@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Kitchen;
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class KitchenRepository
@@ -29,6 +30,30 @@ class KitchenRepository extends BaseRepository
     public function getFieldsSearchable()
     {
         return $this->fieldSearchable;
+    }
+
+    /**
+     * @param string $appDomain
+     * @param array $search
+     * @param null $skip
+     * @param null $limit
+     * @param array $columns
+     * @return Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getByAppDomain(string $appDomain = '', $search = [], $skip = null, $limit = null, $columns = ['*'])
+    {
+        $query = $this->allQuery($search, $skip, $limit);
+
+        if($siteConfig = config('sites.'.$appDomain)) {
+            if(isset($siteConfig['cities']) && $siteConfig['cities'] !== '*') {
+                $query->whereHas('companies.address', function (Builder $query) use ($siteConfig) {
+                    $query->whereIn('city', $siteConfig['cities']);
+                });
+
+            }
+        }
+
+        return $query->get($columns);
     }
 
     /**

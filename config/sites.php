@@ -22,9 +22,7 @@ return [
             'background-color' => '#f1f2f6',
             'primary-color' => '#2f3640'
         ],
-        'cities' => [
-            '*'
-        ],
+        'cities' => '*',
     ],
     'cors' => [
         'sneekbezorgt.nl'

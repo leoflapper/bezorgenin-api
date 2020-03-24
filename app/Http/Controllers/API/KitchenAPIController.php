@@ -35,8 +35,9 @@ class KitchenAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $kitchens = $this->kitchenRepository->all(
-            $request->except(['skip', 'limit']),
+        $kitchens = $this->kitchenRepository->getByAppDomain(
+            $request->header('AppDomain', ''),
+            [],
             $request->get('skip'),
             $request->get('limit')
         );
