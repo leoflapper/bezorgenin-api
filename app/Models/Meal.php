@@ -49,7 +49,8 @@ class Meal extends Model
         'company_id' => 'integer',
         'name' => 'string',
         'description' => 'string',
-        'allergens' => 'string'
+        'allergens' => 'string',
+        'price' => 'float'
     ];
 
     /**

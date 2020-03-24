@@ -57,12 +57,14 @@ class MealRepository extends BaseRepository
     public function create($input)
     {
         $input = $this->setCompanyId($input);
+        $input = $this->formatPricesForDb($input);
         return parent::create($input);
     }
 
     public function update($input, $id)
     {
         $input = $this->setCompanyId($input);
+        $input = $this->formatPricesForDb($input);
         return parent::update($input, $id);
     }
 
@@ -96,5 +98,13 @@ class MealRepository extends BaseRepository
      */
     public function getByIdAndCompany(int $id, Company $company) {
         return $this->makeModel()->query()->where('id', $id)->where('company_id', $company->id)->first();
+    }
+
+    private function formatPricesForDb($input)
+    {
+        if(isset($input['price'])) {
+            $input['price'] = str_replace(',', '.', $input['price']);
+        }
+        return $input;
     }
 }

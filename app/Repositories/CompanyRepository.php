@@ -66,6 +66,12 @@ class CompanyRepository extends BaseRepository
         return Company::class;
     }
 
+    public function create($input)
+    {
+        $input = $this->formatPricesForDb($input);
+        return parent::create($input);
+    }
+
     public function update($input, $id)
     {
         if(!auth()->user()->hasRole('admin')) {
@@ -74,13 +80,7 @@ class CompanyRepository extends BaseRepository
             }
         }
 
-        if(isset($input['delivery_costs'])) {
-            $input['delivery_costs'] = str_replace(',', '.', $input['delivery_costs']);
-        }
-
-        if(isset($input['min_order_amount'])) {
-            $input['min_order_amount'] = str_replace(',', '.', $input['min_order_amount']);
-        }
+        $input = $this->formatPricesForDb($input);
 
         /**
          * @var $model Company
@@ -110,5 +110,17 @@ class CompanyRepository extends BaseRepository
         }
 
         return true;
+    }
+
+    private function formatPricesForDb($input)
+    {
+        if(isset($input['delivery_costs'])) {
+            $input['delivery_costs'] = str_replace(',', '.', $input['delivery_costs']);
+        }
+
+        if(isset($input['min_order_amount'])) {
+            $input['min_order_amount'] = str_replace(',', '.', $input['min_order_amount']);
+        }
+        return $input;
     }
 }
