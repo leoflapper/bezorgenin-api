@@ -153,7 +153,7 @@ class CompanyRepository extends BaseRepository
         }
 
         if(isset($input['image_url'])) {
-            $input['image_url'] = str_replace('http', 'https', $input['image_url']);
+            $input['image_url'] = str_replace('http://', 'https://', $input['image_url']);
         }
 
         return $input;
