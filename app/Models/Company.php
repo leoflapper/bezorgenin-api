@@ -55,7 +55,8 @@ class Company extends Model
         'has_shipping',
         'has_pickup',
         'description',
-        'website'
+        'website',
+        'delivery_radius'
     ];
 
     /**
@@ -81,7 +82,8 @@ class Company extends Model
         'has_shipping' => 'boolean',
         'has_pickup' => 'boolean',
         'description' => 'string',
-        'website' => 'string'
+        'website' => 'string',
+        'delivery_radius' => 'string'
     ];
 
     /**
@@ -102,7 +104,8 @@ class Company extends Model
         'iban' => 'required',
         'vat_id' => 'required',
         'description' => '',
-        'website' => ''
+        'website' => '',
+        'delivery_radius' => ''
     ];
 
     /**

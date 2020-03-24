@@ -60,12 +60,6 @@
     {!! Form::text('address.city',  $company->address->city ?? '', ['class' => 'form-control']) !!}
 </div>
 
-<!-- Delivery Costs Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('delivery_costs', 'Bezorgkosten:') !!}
-    {!! Form::text('delivery_costs', null, ['class' => 'form-control']) !!}
-</div>
-
 <!-- Min Order Amount Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('min_order_amount', 'Minimale bestelbedrag:') !!}
@@ -130,6 +124,18 @@
 <div class="form-group col-sm-6">
     {!! Form::label('has_pickup', 'Mogelijkheid tot afhalen:') !!}
     {!! Form::checkbox('has_pickup', true, $company->has_pickup ?? '') !!}
+</div>
+
+<!-- Delivery Costs Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('delivery_costs', 'Bezorgkosten (indien jullie bezorgen):') !!}
+    {!! Form::text('delivery_costs', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Delivery radius Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('delivery_radius', 'Bezorgstraal (in kilometers):') !!}
+    {!! Form::number('delivery_radius', null, ['class' => 'form-control']) !!}
 </div>
 
 
