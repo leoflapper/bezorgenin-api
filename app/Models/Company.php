@@ -35,7 +35,6 @@ class Company extends Model
 
     public $table = 'companies';
 
-
     protected $dates = ['deleted_at'];
 
     public $fillable = [

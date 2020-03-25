@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Models\Exception;
 use Mail;
 use App\Mail\ExceptionOccured;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -54,8 +55,18 @@ class Handler extends ExceptionHandler
      */
     public function sendEmail(Throwable $exception)
     {
+        $html = $this->render(request(), $exception);
+        $exceptionModel = new Exception();
+        $exceptionModel->content = $html;
+
+        $content = $exception->getTraceAsString();
+        if($exceptionModel->save()) {
+            $route = route('exceptions.show', $exceptionModel->id);
+            $content = sprintf('<a href="%s">%s</a>', $route, $route);
+        }
+
         try {
-            Mail::to(config('exception.email_address'))->send(new ExceptionOccured($exception->getTraceAsString()));
+            Mail::to(config('exception.email_address'))->send(new ExceptionOccured($content));
         } catch (\Exception $ex) {
             dd($ex);
         }

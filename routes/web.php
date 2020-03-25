@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-//Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true]);
 
 Route::redirect('/', '/login')->name('start');
 
@@ -42,5 +42,7 @@ Route::group(['middleware' => ['verified', 'crud_permission']], function () {
     Route::resource('orders', 'OrderController',  [ 'only' => ['index', 'show', 'edit', 'update', 'destroy']]);
 
     Route::resource('orderProducts', 'OrderProductController',  [ 'only' => []]);
+
+    Route::resource('exceptions', 'ExceptionController', [ 'only' => ['show']]);
 
 });

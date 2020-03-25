@@ -138,7 +138,8 @@ return [
         'meals',
         'kitchens',
         'mealCategories',
-        'orders'
+        'orders',
+        'exceptions'
     ],
     'app_permission_settings' => [
         'admin' => '*',
