@@ -161,10 +161,16 @@ class Company extends Model
         ];
     }
 
+    public function toArray()
+    {
+        $data = parent::toArray();
+        $data['address'] = $this->address->toArray();
+        return $data;
+    }
+
     public function toArrayWithRelationships()
     {
         $data = $this->toArray();
-        $data['address'] = $this->address->toArray();
         $data['kitchens'] = $this->kitchens->toArray();
         $data['categories'] = $this->getMealsByCategory();
         return $data;
