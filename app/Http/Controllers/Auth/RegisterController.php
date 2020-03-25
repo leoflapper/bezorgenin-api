@@ -77,6 +77,8 @@ class RegisterController extends Controller
             app(UserRepository::class)->initUser($user, $data);
         }
 
+        $user->sendEmailVerificationNotification();
+
         return $user;
     }
 }
