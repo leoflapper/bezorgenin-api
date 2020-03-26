@@ -30,7 +30,7 @@ class Location
             if($address->country_id && $address->city && $address->postcode) {
 
                 $search = $nominatim->newSearch()
-                    //->street($address->street . ' ' . $address->housenumber . ' ' . $address->housenumber_addition)
+                    ->street($address->street . ' ' . $address->housenumber . ' ' . $address->housenumber_addition)
                     ->countryCode($address->country_id)
                     ->city($address->city)
                     ->postalCode($address->postcode)
