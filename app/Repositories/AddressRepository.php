@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Address;
 use App\Repositories\BaseRepository;
+use maxh\Nominatim\Nominatim;
 
 /**
  * Class AddressRepository

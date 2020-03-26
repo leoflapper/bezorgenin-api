@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+use App\Location\Location;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -27,14 +28,15 @@ class Address extends Model
     protected $dates = ['deleted_at'];
 
 
-
     public $fillable = [
         'street',
         'housenumber',
         'housenumber_addition',
         'postcode',
         'city',
-        'country_id'
+        'country_id',
+        'latitude',
+        'longitude'
     ];
 
     /**
@@ -49,7 +51,9 @@ class Address extends Model
         'housenumber_addition' => 'string',
         'postcode' => 'string',
         'city' => 'string',
-        'country_id' => 'string'
+        'country_id' => 'string',
+        'latitude' => 'string',
+        'longitude' => 'string'
     ];
 
     /**
@@ -62,8 +66,44 @@ class Address extends Model
         'housenumber' => 'required',
         'postcode' => 'required',
         'city' => 'required',
-        'country_id' => 'required'
+        'country_id' => 'required',
+        'latitude' => '',
+        'longitude' => ''
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::updating(function (Address $address) {
+            $address->setCoordinates();
+        });
+    }
+
+    /**
+     * Sets coordinates for looking up address
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \maxh\Nominatim\Exceptions\NominatimException
+     */
+    public function setCoordinates()
+    {
+        if(!$this->country_id || !$this->postcode || !$this->city) {
+            return;
+        }
+
+        if(!$location = (new Location())->getByAddress($this)) {
+            return;
+        }
+
+        if(isset($location[0])) {
+            $this->latitude = $location[0]['lat'];
+            $this->longitude = $location[0]['lon'];
+        }
+    }
 
     public function getIdentifierAttribute()
     {
@@ -74,6 +114,5 @@ class Address extends Model
         $identifier .= ', '. $this->city;
         return $identifier;
     }
-
 
 }

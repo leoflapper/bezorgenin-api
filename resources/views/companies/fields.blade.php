@@ -42,7 +42,7 @@
 
 <div class="form-group col-sm-6">
     {!! Form::label('address.housenumber', 'Huisnummer:') !!}
-    {!! Form::text('address.housenumber',  $company->address->housenumber ?? '', ['class' => 'form-control']) !!}
+    {!! Form::number('address.housenumber',  $company->address->housenumber ?? '', ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group col-sm-6">

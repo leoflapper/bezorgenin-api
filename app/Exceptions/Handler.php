@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Models\Exception;
+use Illuminate\Support\Facades\App;
 use Mail;
 use App\Mail\ExceptionOccured;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -42,7 +43,10 @@ class Handler extends ExceptionHandler
     public function report(Throwable $exception)
     {
         if($this->shouldReport($exception)) {
-            $this->sendEmail($exception);
+            if(App::environment() === 'production') {
+                $this->sendEmail($exception);
+            }
+
         }
         parent::report($exception);
     }
@@ -55,11 +59,11 @@ class Handler extends ExceptionHandler
      */
     public function sendEmail(Throwable $exception)
     {
-        $html = $this->render(request(), $exception);
+        $html = $this->renderExceptionWithWhoops($exception);
         $exceptionModel = new Exception();
         $exceptionModel->content = $html;
-
         $content = $exception->getTraceAsString();
+
         if($exceptionModel->save()) {
             $route = route('exceptions.show', $exceptionModel->id);
             $content = sprintf('<a href="%s">%s</a>', $route, $route);
