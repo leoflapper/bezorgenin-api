@@ -78,9 +78,9 @@ class Address extends Model
      */
     protected static function booted()
     {
-        static::updating(function (Address $address) {
-            $address->setCoordinates();
-        });
+//        static::updating(function (Address $address) {
+//            $address->setCoordinates();
+//        });
     }
 
     /**
