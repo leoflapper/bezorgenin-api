@@ -42,6 +42,9 @@ class AddCoordinatesToAddresses extends Command
             if(!isset($address->latitude) || !isset($address->longitude)) {
                 $this->output->success(sprintf('Setting coordinates for address %s', $address->id));
                 $address->setCoordinates();
+                $sleep = rand(0, 10);
+                $this->output->warning(sprintf('Sleep %s', $sleep));
+                sleep($sleep);
             }
         }
     }
