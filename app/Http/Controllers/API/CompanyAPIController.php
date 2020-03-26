@@ -35,22 +35,7 @@ class CompanyAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $companiesQuery = CompanyQueryBuilder::create()
-            ->allQuery([],
-                $request->get('skip'),
-                $request->get('limit')
-            )
-            ->byAppDomain($request->header('AppDomain', ''));
-
-//        $latitude = 53.1917548;
-//        $longitude =  5.8013954;
-        if($request->query('order_by') === 'coordinates' && $request->header('latitude') &&  $request->header('longitude')) {
-            $companiesQuery->orderByCoordinates($request->header('latitude'), $request->header('longitude'))  ;
-        } else {
-            $companiesQuery->query()->orderBy('companies.name', 'asc');
-        }
-
-        return $this->sendResponse($companiesQuery->get()->toArray(), 'Companies retrieved successfully');
+        return $this->sendResponse($this->companyRepository->getQueryByRequest($request)->get()->toArray(), 'Companies retrieved successfully');
     }
 
     /**

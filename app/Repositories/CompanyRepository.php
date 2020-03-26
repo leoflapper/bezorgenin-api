@@ -4,8 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Company;
 use App\Models\Kitchen;
-use App\Repositories\BaseRepository;
-use Illuminate\Database\Eloquent\Builder;
+use App\Query\CompanyQueryBuilder;
+use Illuminate\Http\Request;
 
 /**
  * Class CompanyRepository
@@ -32,29 +32,33 @@ class CompanyRepository extends BaseRepository
     ];
 
     /**
-     * @param string $appDomain
-     * @param array $search
-     * @param null $skip
-     * @param null $limit
-     * @param array $columns
-     * @return Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @param Request $request
+     * @return CompanyQueryBuilder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function queryByAppDomain($query, string $appDomain = '', $search = [], $skip = null, $limit = null, $columns = ['*'])
+    public function getQueryByRequest(Request $request)
     {
-        $query = $this->allQuery($search, $skip, $limit);
+        $companiesQuery = CompanyQueryBuilder::create()
+            ->allQuery([],
+                $request->get('skip'),
+                $request->get('limit')
+            )
+            ->byAppDomain($request->header('AppDomain', ''));
 
-        if($siteConfig = config('sites.'.$appDomain)) {
-            if(isset($siteConfig['cities']) && $siteConfig['cities'] !== '*') {
-                $query->whereHas('address', function (Builder $query) use ($siteConfig) {
-                    $query->whereIn('city', $siteConfig['cities']);
-                });
-
-            }
+//        $latitude = 53.1917548;
+//        $longitude =  5.8013954;
+        if($request->query('order_by') === 'coordinates' && $request->header('latitude') &&  $request->header('longitude')) {
+            $companiesQuery->orderByCoordinates($request->header('latitude'), $request->header('longitude'))  ;
+        } else {
+            $companiesQuery->query()->orderBy('companies.name', 'asc');
         }
-
-        return $query;
+        return $companiesQuery;
     }
 
+    /**
+     * @param int $id
+     * @param array $columns
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|object|null
+     */
     public function find($id, $columns = ['*'])
     {
         if(!$company = parent::find($id, $columns)) {

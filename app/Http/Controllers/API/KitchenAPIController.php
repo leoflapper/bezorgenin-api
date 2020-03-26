@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreateKitchenAPIRequest;
 use App\Http\Requests\API\UpdateKitchenAPIRequest;
 use App\Models\Kitchen;
+use App\Query\CompanyQueryBuilder;
+use App\Repositories\CompanyRepository;
 use App\Repositories\KitchenRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -76,7 +78,7 @@ class KitchenAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         /** @var Kitchen $kitchen */
         $kitchen = $this->kitchenRepository->find($id);
@@ -85,7 +87,16 @@ class KitchenAPIController extends AppBaseController
             return $this->sendError('Kitchen not found');
         }
 
-        return $this->sendResponse($kitchen->toArrayWithRelationships(), 'Kitchen retrieved successfully');
+        $data = $kitchen->toArray();
+
+        $data['companies'] = app(CompanyRepository::class)
+            ->getQueryByRequest($request)
+            ->query()
+            ->whereHas('kitchens', function($q) use($id){
+                $q->where('kitchens.id', $id);
+            })->get();
+
+        return $this->sendResponse($data, 'Kitchen retrieved successfully');
     }
 
     /**
