@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreateCompanyAPIRequest;
 use App\Http\Requests\API\UpdateCompanyAPIRequest;
 use App\Models\Company;
+use App\Query\CompanyQueryBuilder;
 use App\Repositories\CompanyRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -34,14 +35,22 @@ class CompanyAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $companies = $this->companyRepository->getByAppDomain(
-            $request->header('AppDomain', ''),
-            [],
-            $request->get('skip'),
-            $request->get('limit')
-        );
+        $companiesQuery = CompanyQueryBuilder::create()
+            ->allQuery([],
+                $request->get('skip'),
+                $request->get('limit')
+            )
+            ->byAppDomain($request->header('AppDomain', ''));
 
-        return $this->sendResponse($companies->toArray(), 'Companies retrieved successfully');
+//        $latitude = 53.1917548;
+//        $longitude =  5.8013954;
+        if($request->query('order_by') === 'coordinates' && $request->header('latitude') &&  $request->header('longitude')) {
+            $companiesQuery->orderByCoordinates($request->header('latitude'), $request->header('longitude'))  ;
+        } else {
+            $companiesQuery->query()->orderBy('companies.name', 'asc');
+        }
+
+        return $this->sendResponse($companiesQuery->get()->toArray(), 'Companies retrieved successfully');
     }
 
     /**

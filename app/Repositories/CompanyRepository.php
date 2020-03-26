@@ -39,7 +39,7 @@ class CompanyRepository extends BaseRepository
      * @param array $columns
      * @return Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getByAppDomain(string $appDomain = '', $search = [], $skip = null, $limit = null, $columns = ['*'])
+    public function queryByAppDomain($query, string $appDomain = '', $search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $query = $this->allQuery($search, $skip, $limit);
 
@@ -52,7 +52,7 @@ class CompanyRepository extends BaseRepository
             }
         }
 
-        return $query->get($columns);
+        return $query;
     }
 
     public function find($id, $columns = ['*'])
