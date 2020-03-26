@@ -33,7 +33,7 @@ class Location
                     ->street($address->street . ' ' . $address->housenumber . ' ' . $address->housenumber_addition)
                     ->countryCode($address->country_id)
                     ->city($address->city)
-                    ->postalCode($address->postcode)
+                    ->postalCode(str_replace(' ', '', $address->postcode))
                     ->addressDetails();
 
                 $result = $nominatim->find($search);
