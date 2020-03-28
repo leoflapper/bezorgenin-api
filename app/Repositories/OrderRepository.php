@@ -58,7 +58,9 @@ class OrderRepository extends BaseRepository
             $order->country_id = config('order.default_country_id');
         }
 
-        $company = app(CompanyRepository::class)->find($order->company_id);
+        if(!$company = app(CompanyRepository::class)->find($order->company_id)) {
+            abort('404', 'Company not found');
+        }
 
         $mealRepository = app(MealRepository::class);
         $orderProductRepository = app(OrderProductRepository::class);

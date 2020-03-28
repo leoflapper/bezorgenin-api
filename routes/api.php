@@ -28,7 +28,7 @@ Route::resource('kitchens', 'KitchenAPIController', [ 'only' => ['index', 'show'
 //Route::resource('meals', 'MealAPIController');
 
 
-//Route::resource('orders', 'OrderAPIController', [ 'only' => ['store']]);
+Route::resource('orders', 'OrderAPIController', [ 'only' => ['store']]);
 
 
 //Route::resource('order_products', 'OrderProductAPIController');
