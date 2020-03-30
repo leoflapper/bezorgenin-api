@@ -149,7 +149,7 @@ class Order extends Model
             $text = sprintf($text, $this->first_name, $this->last_name, $this->delivery_time_string, $this->company->name);
         }
 
-        return WhatsApp::getClickAndChatUrl($this->telephone, $text);
+        return WhatsApp::getClickAndChatUrl($this->telephone, $this->country_id, $text);
     }
 
     /**
