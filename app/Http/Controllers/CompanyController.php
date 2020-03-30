@@ -9,6 +9,7 @@ use App\Repositories\AddressRepository;
 use App\Repositories\CompanyRepository;
 use Flash;
 use Response;
+use Spatie\OpeningHours\OpeningHours;
 
 class CompanyController extends AppBaseController
 {

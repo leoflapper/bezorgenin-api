@@ -7,6 +7,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use App\Util\OpeningHours;
 
 /**
  * Class Company
@@ -55,7 +56,11 @@ class Company extends Model
         'has_pickup',
         'description',
         'website',
-        'delivery_radius'
+        'delivery_radius',
+        'delivery_time_start',
+        'delivery_time_end',
+        'note_message',
+        'opening_hours'
     ];
 
     /**
@@ -82,7 +87,11 @@ class Company extends Model
         'has_pickup' => 'boolean',
         'description' => 'string',
         'website' => 'string',
-        'delivery_radius' => 'string'
+        'delivery_radius' => 'string',
+        'delivery_time_start' => 'string',
+        'delivery_time_end' => 'string',
+        'note_message' => 'string',
+        'opening_hours' => OpeningHours::class
     ];
 
     /**
@@ -104,7 +113,10 @@ class Company extends Model
         'vat_id' => 'required',
         'description' => '',
         'website' => '',
-        'delivery_radius' => ''
+        'delivery_radius' => '',
+        'delivery_time_start' => 'date_format:H:i',
+        'delivery_time_end' => 'date_format:H:i|after:delivery_time_start',
+        'note_message' => ''
     ];
 
     /**
@@ -161,6 +173,29 @@ class Company extends Model
         ];
     }
 
+    public function setDeliveryTimeEndAttribute($value)
+    {
+        $this->attributes['delivery_time_end'] = $this->roundTimeOnQuarter($value);
+    }
+
+    public function setDeliveryTimeStartAttribute($value)
+    {
+        $this->attributes['delivery_time_start'] = $this->roundTimeOnQuarter($value);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     * @throws \Exception
+     */
+    private function roundTimeOnQuarter($value)
+    {
+        $dateTime = new \DateTime($value);
+        $roundMinutes = ceil($dateTime->format('i') / 15) * 15;
+        $dateTime->setTime($dateTime->format('H'), $roundMinutes);
+        return $dateTime->format('H:i');
+    }
+
     public function toArray()
     {
         $data = parent::toArray();
@@ -171,6 +206,7 @@ class Company extends Model
     public function toArrayWithRelationships()
     {
         $data = $this->toArray();
+
         $data['kitchens'] = $this->kitchens->toArray();
         $data['categories'] = $this->getMealsByCategory();
         return $data;

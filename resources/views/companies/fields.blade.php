@@ -113,31 +113,53 @@
     ]) !!}
 </div>
 
+<hr style="display:block; width: 100%;" />
 
-<!-- Vat Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('has_shipping', 'Mogelijkheid tot bezorgen:') !!}
-    {!! Form::checkbox('has_shipping', true,  $company->has_shipping ?? '') !!}
+<div class="col-xs-12" style="margin-bottom: 15px">
+    <h4>Bezorgen en Afhalen</h4>
 </div>
 
+
 <!-- Vat Id Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('has_pickup', 'Mogelijkheid tot afhalen:') !!}
     {!! Form::checkbox('has_pickup', true, $company->has_pickup ?? '') !!}
 </div>
 
-<!-- Delivery Costs Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('delivery_costs', 'Bezorgkosten (indien jullie bezorgen):') !!}
-    {!! Form::text('delivery_costs', null, ['class' => 'form-control']) !!}
+<!-- Vat Id Field -->
+<div class="form-group col-sm-12">
+    {!! Form::label('has_shipping', 'Mogelijkheid tot bezorgen:') !!}
+    {!! Form::checkbox('has_shipping', true,  $company->has_shipping ?? '') !!}
 </div>
 
-<!-- Delivery radius Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('delivery_radius', 'Bezorgstraal (in kilometers):') !!}
-    {!! Form::number('delivery_radius', null, ['class' => 'form-control']) !!}
+<div class="shipping-detail-input-fields">
+
+    <!-- Delivery Costs Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('delivery_costs', 'Bezorgkosten:') !!}
+        {!! Form::text('delivery_costs', null, ['class' => 'form-control']) !!}
+    </div>
+
+    <!-- Delivery radius Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('delivery_radius', 'Bezorgstraal (in kilometers):') !!}
+        {!! Form::number('delivery_radius', null, ['class' => 'form-control']) !!}
+    </div>
+
+    <!-- Delivery start time Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('delivery_time_start', 'Bezorgen starttijd:') !!}
+        {!! Form::time('delivery_time_start', null, ['class' => 'form-control']) !!}
+    </div>
+
+    <!-- Delivery end time Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('delivery_time_end', 'Bezorgen eindtijd:') !!}
+        {!! Form::time('delivery_time_end', null, ['class' => 'form-control']) !!}
+    </div>
 </div>
 
+<hr style="display:block; width: 100%;" />
 
 <!-- Name Field -->
 <div class="form-group col-sm-12">
@@ -145,8 +167,38 @@
     {!! Form::textArea('description', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Delivery start time Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('note_message', 'Bericht bij opmerkingen veld:') !!}
+    <p>Geef hier een optioneel bericht aan voor bij het opmerkingen veld van het bestelproces. Bijvoorbeeld: "Wij leveren uitsluitend maandags of dinsdags" of "De bezorgtijd kan een kwartier afwijken".</p>
+    {!! Form::textarea('note_message', null, ['class' => 'form-control']) !!}
+</div>
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Opslaan', ['class' => 'btn btn-primary']) !!}
     <a href="{{ route('companies.index') }}" class="btn btn-default">Cancel</a>
 </div>
+
+<script
+    src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+    crossorigin="anonymous"></script>
+<script>
+    jQuery( document ).ready(function($) {
+
+        setShippingInputFields();
+        $('#has_shipping').on('change', function(){
+            setShippingInputFields();
+        });
+
+        function setShippingInputFields()
+        {
+            $('.shipping-detail-input-fields').hide();
+            if($('#has_shipping').is(':checked')) {
+                $('.shipping-detail-input-fields').show();
+            }
+        }
+
+    });
+</script>
