@@ -24,6 +24,11 @@ return [
         ],
         'cities' => '*',
     ],
+    'localhost' => [
+        'example_ids' => [
+            1,2
+        ]
+    ],
     'cors' => [
         'sneekbezorgt.nl'
     ],

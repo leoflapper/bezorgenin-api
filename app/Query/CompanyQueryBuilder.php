@@ -106,6 +106,10 @@ class CompanyQueryBuilder
             }
         }
 
+        if($appDomain !== 'localhost') {
+            $this->query->whereNotIn('id', config('sites.localhost.example_ids'));
+        }
+
         return $this;
     }
 
