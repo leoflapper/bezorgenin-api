@@ -23,6 +23,11 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    public static $rules  = [
+        'email' => 'required|emailcomposer require barryvdh/laravel-snappy',
+        'password' => '',
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *

@@ -84,12 +84,19 @@ class CompanyDataTable extends DataTable
      */
     protected function getColumns()
     {
-        return [
+        $columns = [
             'name',
             'email',
             'telephone',
             'vat_id'
         ];
+
+        if(auth()->user()->hasRole('admin')) {
+            array_unshift($columns,  'created_at');
+        }
+
+        return $columns;
+
     }
 
     /**

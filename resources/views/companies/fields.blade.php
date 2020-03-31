@@ -69,6 +69,7 @@
 <!-- Email Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('email', 'E-mailadres:') !!}
+    <p>Dit e-mailadres wordt gebruikt voor de bestellingen</p>
     {!! Form::text('email', null, ['class' => 'form-control']) !!}
 </div>
 
