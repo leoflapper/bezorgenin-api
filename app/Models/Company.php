@@ -88,8 +88,6 @@ class Company extends Model
         'description' => 'string',
         'website' => 'string',
         'delivery_radius' => 'string',
-        'delivery_time_start' => 'string',
-        'delivery_time_end' => 'string',
         'note_message' => 'string',
         'opening_hours' => OpeningHours::class
     ];
@@ -114,8 +112,6 @@ class Company extends Model
         'description' => '',
         'website' => '',
         'delivery_radius' => '',
-        'delivery_time_start' => 'date_format:H:i',
-        'delivery_time_end' => 'date_format:H:i|after:delivery_time_start',
         'note_message' => ''
     ];
 
@@ -173,33 +169,20 @@ class Company extends Model
         ];
     }
 
-    public function setDeliveryTimeEndAttribute($value)
-    {
-        $this->attributes['delivery_time_end'] = $this->roundTimeOnQuarter($value);
-    }
-
-    public function setDeliveryTimeStartAttribute($value)
-    {
-        $this->attributes['delivery_time_start'] = $this->roundTimeOnQuarter($value);
-    }
-
-    /**
-     * @param $value
-     * @return string
-     * @throws \Exception
-     */
-    private function roundTimeOnQuarter($value)
-    {
-        $dateTime = new \DateTime($value);
-        $roundMinutes = ceil($dateTime->format('i') / 15) * 15;
-        $dateTime->setTime($dateTime->format('H'), $roundMinutes);
-        return $dateTime->format('H:i');
-    }
-
     public function toArray()
     {
         $data = parent::toArray();
         $data['address'] = $this->address->toArray();
+
+        $date = new \DateTime();
+        $day = $date->format('l');
+        $data['opening_time'] = '';
+        $data['closing_time'] = '';
+        if(isset($this->opening_hours->forDay($day)->getIterator()[0])) {
+            $data['opening_time'] =  $this->opening_hours->forDay($day)->getIterator()[0]->start()->format();
+            $data['closing_time'] = $this->opening_hours->forDay($day)->getIterator()[0]->end()->format();
+        }
+
         return $data;
     }
 

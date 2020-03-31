@@ -14,8 +14,6 @@ class AddFromAndTillDeliveryTimeToCompanies extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('delivery_time_start', 100)->nullable();
-            $table->string('delivery_time_end', 100)->nullable();
             $table->text('note_message')->nullable();
         });
     }

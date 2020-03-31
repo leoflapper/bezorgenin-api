@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Company;
 use App\Models\Kitchen;
 use App\Query\CompanyQueryBuilder;
+use App\Util\OpeningHours;
 use Illuminate\Http\Request;
 
 /**
@@ -159,6 +160,43 @@ class CompanyRepository extends BaseRepository
             $input['image_url'] = str_replace('http://', 'https://', $input['image_url']);
         }
 
+        $input = $this->setOpeningHours($input);
+
         return $input;
+    }
+
+    /**
+     * @param array $input
+     * @return array
+     */
+    private function setOpeningHours(array $input): array
+    {
+        $result = [];
+        foreach (OpeningHours::getDays() as $day => $label) {
+            $openingTimeKey = sprintf('%s_opening_time', $day);
+            $closingTimeKey = sprintf('%s_closing_time', $day);
+            if(isset($input[$openingTimeKey]) && isset($input[$closingTimeKey])) {
+                $result[$day] = [sprintf('%s-%s', $this->roundTimeOnQuarter($input[$openingTimeKey]), $this->roundTimeOnQuarter($input[$closingTimeKey]))];
+            }
+        }
+
+        if($result) {
+            $input['opening_hours'] = OpeningHours::create($result);
+        }
+
+        return $input;
+    }
+
+    /**
+     * @param $value
+     * @return string
+     * @throws \Exception
+     */
+    private function roundTimeOnQuarter($value)
+    {
+        $dateTime = new \DateTime($value);
+        $roundMinutes = ceil($dateTime->format('i') / 15) * 15;
+        $dateTime->setTime($dateTime->format('H'), $roundMinutes);
+        return $dateTime->format('H:i');
     }
 }

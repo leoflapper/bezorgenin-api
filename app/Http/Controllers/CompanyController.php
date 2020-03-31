@@ -7,9 +7,9 @@ use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Repositories\AddressRepository;
 use App\Repositories\CompanyRepository;
+use App\Util\OpeningHours;
 use Flash;
 use Response;
-use Spatie\OpeningHours\OpeningHours;
 
 class CompanyController extends AppBaseController
 {
@@ -79,7 +79,7 @@ class CompanyController extends AppBaseController
             return redirect(route('companies.index'));
         }
 
-        return view('companies.show')->with('company', $company);
+        return view('companies.show')->with('company', $company)->with('days', OpeningHours::getDays());
     }
 
     /**
@@ -99,7 +99,7 @@ class CompanyController extends AppBaseController
             return redirect(route('companies.index'));
         }
 
-        return view('companies.edit')->with('company', $company);
+        return view('companies.edit')->with('company', $company)->with('days', OpeningHours::getDays());
     }
 
     /**
@@ -133,7 +133,7 @@ class CompanyController extends AppBaseController
 
         Flash::success('Company updated successfully.');
 
-        return view('companies.edit')->with('company', $company);
+        return view('companies.edit')->with('company', $company)->with('days', OpeningHours::getDays());
     }
 
     /**

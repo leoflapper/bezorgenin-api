@@ -11,6 +11,20 @@ use Spatie\OpeningHours\TimeRange;
 
 class OpeningHours extends \Spatie\OpeningHours\OpeningHours implements CastsAttributes, Arrayable, Jsonable
 {
+
+    public static function getDays()
+    {
+        return [
+            'monday' => 'Maandag',
+            'tuesday' => 'Dinsdag',
+            'wednesday' => 'Woensdag',
+            'thursday' => 'Donderdag',
+            'friday' => 'Vrijdag',
+            'saturday' => 'Zaterdag',
+            'sunday' => 'Zondag'
+        ];
+    }
+
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $key

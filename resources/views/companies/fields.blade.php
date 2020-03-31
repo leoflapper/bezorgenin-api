@@ -112,6 +112,38 @@
         'data-placeholder' => 'Click here to choose'
     ]) !!}
 </div>
+<hr style="display:block; width: 100%;" />
+
+<div class="col-xs-12" style="margin-bottom: 15px">
+    <h4>Openingstijden</h4>
+</div>
+
+
+<div class="col-xs-12 col-md-6">
+    <p>Houd er rekening mee dat de bezorgtijden aan de hand van deze tijden weergeven worden</p>
+    <table class="table table-striped">
+        <thead>
+        <th>Dag</th>
+        <th>Openingstijd</th>
+        <th>Sluitingstijd</th>
+        </thead>
+        <tbody>
+            @foreach($days as $day => $label)
+                <tr>
+                    <td>{{ $label }}</td>
+                    <td>
+                        {!! Form::time(sprintf('%s_opening_time', $day), isset($company->opening_hours->forDay($day)->getIterator()[0]) ? $company->opening_hours->forDay($day)->getIterator()[0]->start()->format() : null, ['class' => 'form-control']) !!}
+                    </td>
+                    <td>
+                        {!! Form::time(sprintf('%s_closing_time', $day), isset($company->opening_hours->forDay($day)->getIterator()[0]) ? $company->opening_hours->forDay($day)->getIterator()[0]->end()->format() : null, ['class' => 'form-control']) !!}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
+
 
 <hr style="display:block; width: 100%;" />
 
@@ -144,18 +176,6 @@
     <div class="form-group col-sm-6">
         {!! Form::label('delivery_radius', 'Bezorgstraal (in kilometers):') !!}
         {!! Form::number('delivery_radius', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <!-- Delivery start time Field -->
-    <div class="form-group col-sm-6">
-        {!! Form::label('delivery_time_start', 'Bezorgen starttijd:') !!}
-        {!! Form::time('delivery_time_start', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <!-- Delivery end time Field -->
-    <div class="form-group col-sm-6">
-        {!! Form::label('delivery_time_end', 'Bezorgen eindtijd:') !!}
-        {!! Form::time('delivery_time_end', null, ['class' => 'form-control']) !!}
     </div>
 </div>
 
