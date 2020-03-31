@@ -12,6 +12,9 @@ use Spatie\OpeningHours\TimeRange;
 class OpeningHours extends \Spatie\OpeningHours\OpeningHours implements CastsAttributes, Arrayable, Jsonable
 {
 
+    /**
+     * @return array
+     */
     public static function getDays()
     {
         return [

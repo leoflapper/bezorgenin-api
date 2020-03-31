@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -17,7 +17,7 @@ class MealCategory extends Model
     use SoftDeletes;
 
     public $table = 'meal_categories';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -43,8 +43,8 @@ class MealCategory extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required'
+        'name' => 'required|unique:meal_categories'
     ];
 
-    
+
 }

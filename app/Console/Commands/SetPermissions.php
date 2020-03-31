@@ -14,7 +14,7 @@ class SetPermissions extends Command
      *
      * @var string
      */
-    protected $signature = 'permissions:set';
+    protected $signature = 'permission:set';
 
     /**
      * The console command description.
