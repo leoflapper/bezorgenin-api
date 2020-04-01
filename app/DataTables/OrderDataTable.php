@@ -31,7 +31,10 @@ class OrderDataTable extends DataTable
 
         $dataTable->editColumn('company_id', function($order)
         {
-            return $order->company->name;
+            if(isset($order->company) && $order->company) {
+                return $order->company->name;
+            }
+            return $order->company_id;
         });
 
         $dataTable->editColumn('street', function($order)
