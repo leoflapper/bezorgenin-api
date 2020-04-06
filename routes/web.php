@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['verified']], function () {
     Route::resource('users', 'UserController');
+    Route::get('/test/telegram', 'TestController@testTelegram')->name('test.telegram');
 });
 
 
