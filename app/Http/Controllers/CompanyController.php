@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\DataTables\CompanyDataTable;
 use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Notifications\TelegramFailedJob;
 use App\Repositories\AddressRepository;
 use App\Repositories\CompanyRepository;
 use App\Util\OpeningHours;
 use Flash;
+use Illuminate\Support\Facades\Notification;
 use Response;
 
 class CompanyController extends AppBaseController

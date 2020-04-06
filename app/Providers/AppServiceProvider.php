@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\Company;
+use App\Notifications\TelegramFailedJob;
+use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Queue\QueueManager;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::directive('currency', function ($value) {
             return "<?php echo App\Util\Currency::format($value); ?>";
+        });
+
+        app(QueueManager::class)->failing(function (JobFailed $event) {
+            Notification::send('telegram-bot-api', new TelegramFailedJob());
         });
     }
 }
