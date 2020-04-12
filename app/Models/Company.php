@@ -176,6 +176,8 @@ class Company extends Model
 
         $date = new \DateTime();
         $day = $date->format('l');
+
+        $data['has_opening_hours'] = $this->getRawOriginal('opening_hours') !== null ? true: false;
         $data['opening_time'] = '';
         $data['closing_time'] = '';
         if(isset($this->opening_hours->forDay($day)->getIterator()[0])) {
